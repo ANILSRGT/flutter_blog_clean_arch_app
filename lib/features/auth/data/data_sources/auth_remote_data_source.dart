@@ -24,18 +24,22 @@ class AuthRemoteDataSource implements IAuthRemoteDataSource {
 
       if (res.user == null) {
         return ResponseModelFail(
-          code: _authError('sign_in'),
+          code: _authError('sign_in_user_null'),
           message: 'User not found!',
           throwMessage: 'User not found!',
         );
       }
 
-      final user = UserModel.fromJson(res.user!.toJson());
+      final user = UserModel(
+        id: res.user!.id,
+        name: res.user!.userMetadata?['name'],
+        email: email,
+      );
       return ResponseModelSuccess(data: user);
     } catch (e) {
       return ResponseModelFail(
         code: _authError('sign_in'),
-        message: 'An error occurred while signing in!',
+        message: 'An error occurred!',
         throwMessage: e.toString(),
       );
     }
@@ -58,18 +62,22 @@ class AuthRemoteDataSource implements IAuthRemoteDataSource {
 
       if (res.user == null) {
         return ResponseModelFail(
-          code: _authError('sign_up'),
+          code: _authError('sign_up_user_null'),
           message: 'User is null!',
           throwMessage: 'User is null',
         );
       }
 
-      final user = UserModel.fromJson(res.user!.toJson());
+      final user = UserModel(
+        id: res.user!.id,
+        name: name,
+        email: email,
+      );
       return ResponseModelSuccess(data: user);
     } catch (e) {
       return ResponseModelFail(
         code: _authError('sign_up'),
-        message: 'An error occurred while signing up!',
+        message: 'An error occurred!',
         throwMessage: e.toString(),
       );
     }
