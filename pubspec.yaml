@@ -1,0 +1,42 @@
+name: flutter_blog_clean_arch_app
+description: "A new Flutter project."
+publish_to: "none"
+version: 0.1.0
+
+environment:
+  sdk: ">=3.3.1 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State Management
+  flutter_bloc: ^8.1.4
+  bloc: ^8.1.3
+
+  # Serialization
+  equatable: ^2.0.5
+  json_annotation: ^4.8.1
+
+  # Dependency Injection
+  get_it: ^7.6.7
+
+  # Network
+  supabase_flutter: ^2.3.4
+
+  # Security
+  flutter_dotenv: ^5.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  build_runner: ^2.4.8
+  json_serializable: ^6.7.1
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/env/.env
+    - assets/env/.dev.env
