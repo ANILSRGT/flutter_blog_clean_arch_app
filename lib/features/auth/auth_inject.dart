@@ -13,32 +13,35 @@ import 'package:get_it/get_it.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 final class AuthInject implements IInject {
-  static AuthInject instance = AuthInject._();
   AuthInject._();
+  static AuthInject instance = AuthInject._();
 
   @override
   Future<void> init(GetIt sl) async {
     final supabaseAdminClient = SupabaseClient(
-        AppSecrets.instance.read(AppEnvKeys.supabaseUrl),
-        AppSecrets.instance.read(AppEnvKeys.supabaseServiceRoleKey),
-        authOptions: AuthClientOptions(
-          authFlowType: AuthFlowType.pkce,
-          pkceAsyncStorage: SharedPreferencesGotrueAsyncStorage(),
-        ));
-    sl.registerLazySingleton(() => supabaseAdminClient);
-
-    sl.registerFactory<IAuthRemoteDataSource>(
-      () => AuthRemoteDataSource(supabaseClient: sl()),
+      AppSecrets.instance.read(AppEnvKeys.supabaseUrl),
+      AppSecrets.instance.read(AppEnvKeys.supabaseServiceRoleKey),
+      authOptions: AuthClientOptions(
+        pkceAsyncStorage: SharedPreferencesGotrueAsyncStorage(),
+      ),
     );
 
-    sl.registerFactory<IAuthRepository>(
-      () => AuthRepository(remoteDataSource: sl()),
-    );
-
-    sl.registerFactory(() => AuthSignInUseCase(authRepository: sl()));
-    sl.registerFactory(() => AuthSignUpUseCase(authRepository: sl()));
-    sl.registerFactory(() => AuthSignOutUseCase(authRepository: sl()));
-
-    sl.registerLazySingleton(() => AuthPageCubit());
+    // Registering dependencies
+    sl
+      ..registerLazySingleton(() => supabaseAdminClient)
+      // Data Sources
+      ..registerFactory<IAuthRemoteDataSource>(
+        () => AuthRemoteDataSource(supabaseClient: sl()),
+      )
+      // Repositories
+      ..registerFactory<IAuthRepository>(
+        () => AuthRepository(remoteDataSource: sl()),
+      )
+      // Use Cases
+      ..registerFactory(() => AuthSignInUseCase(authRepository: sl()))
+      ..registerFactory(() => AuthSignUpUseCase(authRepository: sl()))
+      ..registerFactory(() => AuthSignOutUseCase(authRepository: sl()))
+      // Blocs
+      ..registerLazySingleton(AuthPageCubit.new);
   }
 }

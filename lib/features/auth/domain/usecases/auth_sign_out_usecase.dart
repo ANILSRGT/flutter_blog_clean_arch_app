@@ -10,6 +10,6 @@ class AuthSignOutUseCase implements UseCaseNoResponse<void> {
 
   @override
   Future<void> execute() async {
-    return await authRepository.signOut();
+    return authRepository.signOut();
   }
 }

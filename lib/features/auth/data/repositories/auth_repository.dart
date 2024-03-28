@@ -15,7 +15,7 @@ class AuthRepository implements IAuthRepository {
     required String email,
     required String password,
   }) async {
-    return await remoteDataSource.signInWithEmailPassword(
+    return remoteDataSource.signInWithEmailPassword(
       email: email,
       password: password,
     );
@@ -27,7 +27,7 @@ class AuthRepository implements IAuthRepository {
     required String email,
     required String password,
   }) async {
-    return await remoteDataSource.signUpWithEmailPassword(
+    return remoteDataSource.signUpWithEmailPassword(
       name: name,
       email: email,
       password: password,
@@ -36,6 +36,6 @@ class AuthRepository implements IAuthRepository {
 
   @override
   Future<void> signOut() async {
-    return await remoteDataSource.signOut();
+    return remoteDataSource.signOut();
   }
 }

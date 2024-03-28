@@ -1,1 +1,22 @@
-include: package:flutter_lints/flutter.yaml
+include: package:very_good_analysis/analysis_options.yaml
+
+analyzer:
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.gr.dart"
+    - "**/*.gen.dart"
+    - "test/.test_coverage.dart"
+    - "bin/cache/**"
+    - "lib/generated_plugin_registrant.dart"
+    - "lib/firebase_options.dart"
+
+linter:
+  rules:
+    eol_at_end_of_file: false
+    sort_pub_dependencies: false
+    avoid_positional_boolean_parameters: false
+    depend_on_referenced_packages: false
+    flutter_style_todos: false
+    public_member_api_docs: false
+    one_member_abstracts: false
+    lines_longer_than_80_chars: false

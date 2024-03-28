@@ -1,6 +1,6 @@
-import 'package:flutter_blog_clean_arch_app/core/extensions/string_extensions.dart';
 import 'package:flutter_blog_clean_arch_app/core/constants/errors/errors.dart';
 import 'package:flutter_blog_clean_arch_app/core/constants/localization/local_keys.g.dart';
+import 'package:flutter_blog_clean_arch_app/core/extensions/string_extensions.dart';
 
 enum AuthErrorCodes implements IErrorCodesEnum {
   signIn(code: 1),

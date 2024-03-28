@@ -1,5 +1,5 @@
-import 'package:json_annotation/json_annotation.dart';
 import 'package:flutter_blog_clean_arch_app/features/auth/domain/entities/user_entity.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 part 'user_model.g.dart';
 
@@ -11,11 +11,11 @@ class UserModel extends UserEntity {
     required super.email,
   });
 
-  @override
-  List<Object?> get props => [id, name, email];
-
   factory UserModel.fromJson(Map<String, dynamic> json) =>
       _$UserModelFromJson(json);
+
+  @override
+  List<Object?> get props => [id, name, email];
 
   Map<String, dynamic> toJson() => _$UserModelToJson(this);
 

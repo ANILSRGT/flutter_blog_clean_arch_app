@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_blog_clean_arch_app/core/managers/localization/app_languages.dart';
 
 final class LocalizationManager {
-  static LocalizationManager instance = LocalizationManager._();
   LocalizationManager._();
+  static LocalizationManager instance = LocalizationManager._();
 
   final String path = 'assets/language';
 

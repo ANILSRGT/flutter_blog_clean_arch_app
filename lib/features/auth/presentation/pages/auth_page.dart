@@ -110,7 +110,7 @@ class _AuthPageState extends State<AuthPage> with AuthPageMixin {
   AuthGradientButton _authButton() {
     final authPageState = watchAuthPageBloc().state;
     return AuthGradientButton(
-      onPressed: () => _onAuthButton(),
+      onPressed: _onAuthButton,
       text: authPageState.isSignInState ? 'Sign In' : 'Sign Up',
       isBusy: authPageState.isBusy,
     );
@@ -124,7 +124,7 @@ class _AuthPageState extends State<AuthPage> with AuthPageMixin {
         textAlign: TextAlign.center,
         text: TextSpan(
           text: authPageState.isSignInState
-              ? 'Don\'t have an account?\t'
+              ? "Don't have an account?\t"
               : 'Already have an account?\t',
           style: Theme.of(context).textTheme.titleMedium,
           children: [

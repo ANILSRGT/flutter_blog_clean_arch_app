@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_blog_clean_arch_app/core/widgets/toast/custom_toast.dart';
 
 class BaseCustomToastOverlay extends OverlayEntry {
@@ -58,7 +57,6 @@ class BaseCustomToastOverlay extends OverlayEntry {
                             Row(
                               mainAxisSize: MainAxisSize.min,
                               mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 if (leadingIcon != null) ...[
                                   leadingIcon,
@@ -95,15 +93,14 @@ class BaseCustomToastOverlay extends OverlayEntry {
 }
 
 final class BaseCustomToastOverlayParams {
-  final BuildContext context;
-  final String message;
-  final CustomToastAlignment alignment;
-  final String? title;
-
   BaseCustomToastOverlayParams({
     required this.context,
     required this.message,
     required this.alignment,
     this.title,
   });
+  final BuildContext context;
+  final String message;
+  final CustomToastAlignment alignment;
+  final String? title;
 }

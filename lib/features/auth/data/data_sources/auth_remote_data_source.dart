@@ -1,14 +1,14 @@
 import 'dart:developer';
 
+import 'package:flutter_blog_clean_arch_app/core/base/models/response_model.dart';
 import 'package:flutter_blog_clean_arch_app/core/constants/errors/error_content_types.dart';
 import 'package:flutter_blog_clean_arch_app/core/constants/errors/error_types.dart';
 import 'package:flutter_blog_clean_arch_app/core/constants/errors/errors.dart';
 import 'package:flutter_blog_clean_arch_app/core/constants/errors/types/auth/auth_error_codes.dart';
 import 'package:flutter_blog_clean_arch_app/core/extensions/collection_extensions.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:flutter_blog_clean_arch_app/core/base/models/response_model.dart';
 import 'package:flutter_blog_clean_arch_app/features/auth/data/data_sources/iauth_remote_data_source.dart';
 import 'package:flutter_blog_clean_arch_app/features/auth/data/models/user_model.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthRemoteDataSource implements IAuthRemoteDataSource {
   AuthRemoteDataSource({
@@ -48,7 +48,7 @@ class AuthRemoteDataSource implements IAuthRemoteDataSource {
 
       final user = UserModel(
         id: res.user!.id,
-        name: res.user!.userMetadata?['name'],
+        name: res.user!.userMetadata!['name'] as String,
         email: email,
       );
       return ResponseModelSuccess(data: user);
@@ -100,6 +100,6 @@ class AuthRemoteDataSource implements IAuthRemoteDataSource {
 
   @override
   Future<void> signOut() async {
-    return await _supabaseClient.auth.signOut();
+    return _supabaseClient.auth.signOut();
   }
 }

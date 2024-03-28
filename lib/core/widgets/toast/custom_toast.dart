@@ -62,7 +62,7 @@ class CustomToast {
     };
   }
 
-  static _insertOverlay(BuildContext context) async {
+  static Future<void> _insertOverlay(BuildContext context) async {
     final overlay = Navigator.of(context).overlay;
     if (_overlayEntry == null || overlay == null) return;
     overlay.insert(_overlayEntry!);

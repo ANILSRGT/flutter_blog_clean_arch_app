@@ -26,38 +26,38 @@ mixin AuthPageMixin on State<AuthPage> {
 
   String? _emailValidator(String? value) {
     if (value.isEmptyOrNull) {
-      return "Email is missing!";
+      return 'Email is missing!';
     }
 
     if (!value.emailValid) {
-      return "Email is invalid!";
+      return 'Email is invalid!';
     }
     return null;
   }
 
   String? _passwordValidator(String? value) {
     if (value.isEmptyOrNull) {
-      return "Password is missing!";
+      return 'Password is missing!';
     }
 
-    final List<String> errors = [];
+    final errors = <String>[];
     if (!value.minCharacters(8)) {
-      errors.add("Min 8 characters");
+      errors.add('Min 8 characters');
     }
 
     if (!value.upperCaseLetterValid) {
-      errors.add("Uppercase letter");
+      errors.add('Uppercase letter');
     }
 
     if (!value.lowerCaseLetterValid) {
-      errors.add("Lowercase letter");
+      errors.add('Lowercase letter');
     }
 
     if (!value.numberValid) {
-      errors.add("Number");
+      errors.add('Number');
     }
 
-    return errors.isNotEmpty ? errors.map((e) => "• $e").join("\n") : null;
+    return errors.isNotEmpty ? errors.map((e) => '• $e').join('\n') : null;
   }
 
   Future<void> _onAuthButton() async {

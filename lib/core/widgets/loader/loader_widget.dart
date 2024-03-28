@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class LoaderWidget extends StatelessWidget {
-  final bool isLoading;
-  final Widget child;
   const LoaderWidget({
-    super.key,
     required this.isLoading,
     required this.child,
+    super.key,
   });
+  final bool isLoading;
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class LoaderWidget extends StatelessWidget {
       children: [
         child,
         if (isLoading)
-          Container(
+          ColoredBox(
             color: Colors.black.withOpacity(0.5),
             child: const Center(
               child: CircularProgressIndicator(),

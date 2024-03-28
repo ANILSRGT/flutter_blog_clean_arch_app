@@ -1,10 +1,7 @@
 import 'package:flutter_blog_clean_arch_app/core/constants/errors/error_content_types.dart';
 import 'package:flutter_blog_clean_arch_app/core/constants/errors/error_types.dart';
 
-/// [T] is the type of error code enum
 final class Errors {
-  // const Errors._();
-
   /// ex. `S/AU#0001`<br>
   /// `S` is the type of error<br>
   /// `AU` is the content type of error<br>

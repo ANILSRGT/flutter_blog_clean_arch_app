@@ -3,9 +3,9 @@ import 'package:flutter_blog_clean_arch_app/core/theme/app_pallete.dart';
 
 class AuthGradientButton extends StatelessWidget {
   const AuthGradientButton({
-    super.key,
     required this.onPressed,
     required this.text,
+    super.key,
     this.isBusy = false,
   });
 

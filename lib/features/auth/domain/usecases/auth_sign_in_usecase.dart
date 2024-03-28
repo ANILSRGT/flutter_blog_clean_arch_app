@@ -13,8 +13,9 @@ class AuthSignInUseCase
 
   @override
   Future<ResponseModel<UserEntity>> execute(
-      AuthSignInUseCaseParams params) async {
-    return await authRepository.signInWithEmailPassword(
+    AuthSignInUseCaseParams params,
+  ) async {
+    return authRepository.signInWithEmailPassword(
       email: params.email,
       password: params.password,
     );
