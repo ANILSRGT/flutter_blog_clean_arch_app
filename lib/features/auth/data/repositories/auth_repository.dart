@@ -33,4 +33,9 @@ class AuthRepository implements IAuthRepository {
       password: password,
     );
   }
+
+  @override
+  Future<void> signOut() async {
+    return await remoteDataSource.signOut();
+  }
 }

@@ -15,3 +15,11 @@ abstract interface class UseCaseNoFuture<T> {
 abstract interface class UseCaseNoFutureWithParams<T, Params> {
   ResponseModel<T> execute(Params params);
 }
+
+abstract interface class UseCaseNoResponse<T> {
+  Future<T> execute();
+}
+
+abstract interface class UseCaseNoResponseWithParams<T, Params> {
+  Future<T> execute(Params params);
+}

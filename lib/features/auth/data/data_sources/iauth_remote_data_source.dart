@@ -11,4 +11,5 @@ abstract interface class IAuthRemoteDataSource {
     required String email,
     required String password,
   });
+  Future<void> signOut();
 }

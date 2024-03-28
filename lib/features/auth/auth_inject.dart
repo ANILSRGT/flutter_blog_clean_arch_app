@@ -6,6 +6,7 @@ import 'package:flutter_blog_clean_arch_app/features/auth/data/data_sources/iaut
 import 'package:flutter_blog_clean_arch_app/features/auth/data/repositories/auth_repository.dart';
 import 'package:flutter_blog_clean_arch_app/features/auth/domain/repositories/iauth_repository.dart';
 import 'package:flutter_blog_clean_arch_app/features/auth/domain/usecases/auth_sign_in_usecase.dart';
+import 'package:flutter_blog_clean_arch_app/features/auth/domain/usecases/auth_sign_out_usecase.dart';
 import 'package:flutter_blog_clean_arch_app/features/auth/domain/usecases/auth_sign_up_usecase.dart';
 import 'package:flutter_blog_clean_arch_app/features/auth/presentation/blocs/auth_page/auth_page_cubit.dart';
 import 'package:get_it/get_it.dart';
@@ -36,6 +37,7 @@ final class AuthInject implements IInject {
 
     sl.registerFactory(() => AuthSignInUseCase(authRepository: sl()));
     sl.registerFactory(() => AuthSignUpUseCase(authRepository: sl()));
+    sl.registerFactory(() => AuthSignOutUseCase(authRepository: sl()));
 
     sl.registerLazySingleton(() => AuthPageCubit());
   }

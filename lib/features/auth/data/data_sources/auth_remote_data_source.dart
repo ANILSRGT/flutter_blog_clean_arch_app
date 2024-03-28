@@ -97,4 +97,9 @@ class AuthRemoteDataSource implements IAuthRemoteDataSource {
       return _authErrorCode<UserModel>(AuthErrorCodes.signUp);
     }
   }
+
+  @override
+  Future<void> signOut() async {
+    return await _supabaseClient.auth.signOut();
+  }
 }
