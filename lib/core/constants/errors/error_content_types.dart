@@ -1,7 +1,5 @@
 enum ErrorContentTypes {
-  auth(
-    codeCharacter: 'AU',
-  );
+  auth(codeCharacter: 'AU');
 
   const ErrorContentTypes({
     required this.codeCharacter,

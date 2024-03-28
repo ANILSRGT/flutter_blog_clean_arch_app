@@ -82,6 +82,7 @@ mixin AuthPageMixin on State<AuthPage> {
       CustomToast.show(
         context: context,
         type: CustomToastType.error,
+        title: res.asFail.code,
         message: res.asFail.message,
       );
       return;

@@ -6,5 +6,15 @@
         "lang": "Türkçe",
         "country": "Türkiye",
         "displayName": "Türkçe (Türkiye)"
+    },
+    "errors": {
+        "global": "Bir hata oluştu!",
+        "server": {
+            "signIn": "Giriş yaparken bir hata oluştu!",
+            "signInUserNotFound": "Kullanıcı bulunamadı!",
+            "signUp": "Kayıt olurken bir hata oluştu!",
+            "signUpUserExists": "Kullanıcı zaten mevcut!",
+            "signUpUserInvalid": "Kullanıcı geçersiz!"
+        }
     }
 }

@@ -6,5 +6,15 @@
         "lang": "English",
         "country": "United States",
         "displayName": "English (United States)"
+    },
+    "errors": {
+        "global": "An error occurred!",
+        "server": {
+            "signIn": "An error occurred while signing in!",
+            "signInUserNotFound": "User not found!",
+            "signUp": "An error occurred while signing up!",
+            "signUpUserExists": "User already exists!",
+            "signUpUserInvalid": "User is invalid!"
+        }
     }
 }

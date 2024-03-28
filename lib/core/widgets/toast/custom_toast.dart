@@ -16,19 +16,20 @@ class CustomToast {
   static CustomToastAlignment _alignment = CustomToastAlignment.bottom;
   static CustomToastType _type = CustomToastType.info;
 
-  static init({
+  static Future<void> init({
     CustomToastAlignment? alignment,
     CustomToastType? type,
-  }) {
+  }) async {
     _overlayEntry = null;
     _timer = null;
     _alignment = alignment ?? _alignment;
     _type = type ?? _type;
   }
 
-  static show({
+  static void show({
     required String message,
     required BuildContext context,
+    String? title,
     CustomToastAlignment? alignment,
     CustomToastType? type,
   }) {
@@ -38,6 +39,7 @@ class CustomToast {
     }
 
     final overlayParams = BaseCustomToastOverlayParams(
+      title: title,
       context: context,
       message: message,
       alignment: alignment ?? _alignment,

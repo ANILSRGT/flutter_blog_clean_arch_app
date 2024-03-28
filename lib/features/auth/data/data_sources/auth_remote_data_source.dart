@@ -1,7 +1,14 @@
+import 'dart:developer';
+
+import 'package:flutter_blog_clean_arch_app/core/constants/errors/error_content_types.dart';
+import 'package:flutter_blog_clean_arch_app/core/constants/errors/error_types.dart';
+import 'package:flutter_blog_clean_arch_app/core/constants/errors/errors.dart';
+import 'package:flutter_blog_clean_arch_app/core/constants/errors/types/auth/auth_error_codes.dart';
+import 'package:flutter_blog_clean_arch_app/core/extensions/collection_extensions.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_blog_clean_arch_app/core/base/models/response_model.dart';
 import 'package:flutter_blog_clean_arch_app/features/auth/data/data_sources/iauth_remote_data_source.dart';
 import 'package:flutter_blog_clean_arch_app/features/auth/data/models/user_model.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthRemoteDataSource implements IAuthRemoteDataSource {
   AuthRemoteDataSource({
@@ -9,7 +16,20 @@ class AuthRemoteDataSource implements IAuthRemoteDataSource {
   }) : _supabaseClient = supabaseClient;
 
   final SupabaseClient _supabaseClient;
-  String _authError(String process) => 'auth_${process}_error';
+
+  ResponseModelFail<T> _authErrorCode<T>(AuthErrorCodes code) {
+    final toErrorCode = Errors.toErrorCode(
+      type: ErrorTypes.server,
+      contentType: ErrorContentTypes.auth,
+      codeType: code,
+    );
+
+    return ResponseModelFail(
+      code: toErrorCode,
+      message: code.message,
+      throwMessage: code.message,
+    );
+  }
 
   @override
   Future<ResponseModel<UserModel>> signInWithEmailPassword({
@@ -23,11 +43,7 @@ class AuthRemoteDataSource implements IAuthRemoteDataSource {
       );
 
       if (res.user == null) {
-        return ResponseModelFail(
-          code: _authError('sign_in_user_null'),
-          message: 'User not found!',
-          throwMessage: 'User not found!',
-        );
+        return _authErrorCode<UserModel>(AuthErrorCodes.signInUserNotFound);
       }
 
       final user = UserModel(
@@ -37,11 +53,7 @@ class AuthRemoteDataSource implements IAuthRemoteDataSource {
       );
       return ResponseModelSuccess(data: user);
     } catch (e) {
-      return ResponseModelFail(
-        code: _authError('sign_in'),
-        message: 'An error occurred!',
-        throwMessage: e.toString(),
-      );
+      return _authErrorCode<UserModel>(AuthErrorCodes.signIn);
     }
   }
 
@@ -52,6 +64,16 @@ class AuthRemoteDataSource implements IAuthRemoteDataSource {
     required String password,
   }) async {
     try {
+      final existUsers = await _supabaseClient.auth.admin.listUsers();
+
+      final existUser = existUsers.firstWhereOrNull(
+        (element) => element.email == email,
+      );
+
+      if (existUser != null) {
+        return _authErrorCode<UserModel>(AuthErrorCodes.signUpUserExist);
+      }
+
       final res = await _supabaseClient.auth.signUp(
         email: email,
         password: password,
@@ -61,11 +83,7 @@ class AuthRemoteDataSource implements IAuthRemoteDataSource {
       );
 
       if (res.user == null) {
-        return ResponseModelFail(
-          code: _authError('sign_up_user_null'),
-          message: 'User is null!',
-          throwMessage: 'User is null',
-        );
+        return _authErrorCode<UserModel>(AuthErrorCodes.signUpUserInvalid);
       }
 
       final user = UserModel(
@@ -75,11 +93,8 @@ class AuthRemoteDataSource implements IAuthRemoteDataSource {
       );
       return ResponseModelSuccess(data: user);
     } catch (e) {
-      return ResponseModelFail(
-        code: _authError('sign_up'),
-        message: 'An error occurred!',
-        throwMessage: e.toString(),
-      );
+      log(e.toString());
+      return _authErrorCode<UserModel>(AuthErrorCodes.signUp);
     }
   }
 }

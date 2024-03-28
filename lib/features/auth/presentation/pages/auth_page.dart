@@ -20,12 +20,8 @@ class AuthPage extends StatefulWidget {
 class _AuthPageState extends State<AuthPage> with AuthPageMixin {
   @override
   Widget build(BuildContext context) {
-    return Builder(
-      builder: (_) {
-        return Scaffold(
-          body: _buildBody(),
-        );
-      },
+    return Scaffold(
+      body: _buildBody(),
     );
   }
 

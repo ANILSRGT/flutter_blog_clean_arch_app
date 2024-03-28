@@ -1,4 +1,6 @@
 import 'package:flutter_blog_clean_arch_app/core/base/iinject.dart';
+import 'package:flutter_blog_clean_arch_app/core/env/app_env_keys.dart';
+import 'package:flutter_blog_clean_arch_app/core/env/app_envs.dart';
 import 'package:flutter_blog_clean_arch_app/features/auth/data/data_sources/auth_remote_data_source.dart';
 import 'package:flutter_blog_clean_arch_app/features/auth/data/data_sources/iauth_remote_data_source.dart';
 import 'package:flutter_blog_clean_arch_app/features/auth/data/repositories/auth_repository.dart';
@@ -15,7 +17,14 @@ final class AuthInject implements IInject {
 
   @override
   Future<void> init(GetIt sl) async {
-    sl.registerLazySingleton(() => Supabase.instance.client);
+    final supabaseAdminClient = SupabaseClient(
+        AppSecrets.instance.read(AppEnvKeys.supabaseUrl),
+        AppSecrets.instance.read(AppEnvKeys.supabaseServiceRoleKey),
+        authOptions: AuthClientOptions(
+          authFlowType: AuthFlowType.pkce,
+          pkceAsyncStorage: SharedPreferencesGotrueAsyncStorage(),
+        ));
+    sl.registerLazySingleton(() => supabaseAdminClient);
 
     sl.registerFactory<IAuthRemoteDataSource>(
       () => AuthRemoteDataSource(supabaseClient: sl()),

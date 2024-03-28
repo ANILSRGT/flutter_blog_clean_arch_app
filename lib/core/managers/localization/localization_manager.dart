@@ -16,6 +16,6 @@ final class LocalizationManager {
   ];
 
   Future<void> init() async {
-    EasyLocalization.ensureInitialized();
+    await EasyLocalization.ensureInitialized();
   }
 }

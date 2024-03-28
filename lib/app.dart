@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_blog_clean_arch_app/core/theme/theme.dart';
@@ -18,6 +19,9 @@ class MainApp extends StatelessWidget {
         title: 'Blog App',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.darkThemeMode,
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
         home: const AuthPage(),
       ),
     );

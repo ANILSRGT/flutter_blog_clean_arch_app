@@ -2,10 +2,8 @@ import 'package:flutter_blog_clean_arch_app/core/constants/errors/error_content_
 import 'package:flutter_blog_clean_arch_app/core/constants/errors/error_types.dart';
 
 /// [T] is the type of error code enum
-abstract class Errors<T extends IErrorCodesEnum> {
-  final ErrorContentTypes _contentType;
-  const Errors({required ErrorContentTypes contentType})
-      : _contentType = contentType;
+final class Errors {
+  // const Errors._();
 
   /// ex. `S/AU#0001`<br>
   /// `S` is the type of error<br>
@@ -13,11 +11,12 @@ abstract class Errors<T extends IErrorCodesEnum> {
   /// `0001` is the error code<br>
   /// `type` is the type of error by [ErrorTypes]<br>
   /// `codeType` is the error code by [T]/[IErrorCodesEnum]
-  String toErrorCode({
+  static String toErrorCode<T extends IErrorCodesEnum>({
     required ErrorTypes type,
+    required ErrorContentTypes contentType,
     required T codeType,
   }) {
-    return '${type.codeCharacter}.${_contentType.codeCharacter}-${codeType.code.toString().padLeft(4, '0')}';
+    return '${type.codeCharacter}.${contentType.codeCharacter}-${codeType.code.toString().padLeft(4, '0')}';
   }
 }
 
@@ -28,4 +27,6 @@ abstract interface class IErrorCodesEnum implements Enum {
   /// Unique error code for each error type<br>
   /// ex. 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 etc.
   final int code;
+
+  String get message;
 }

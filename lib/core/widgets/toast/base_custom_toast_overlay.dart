@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_blog_clean_arch_app/core/widgets/toast/custom_toast.dart';
 
 class BaseCustomToastOverlay extends OverlayEntry {
@@ -33,31 +34,54 @@ class BaseCustomToastOverlay extends OverlayEntry {
                           horizontal: 16,
                           vertical: 10,
                         ),
-                        child: Row(
+                        child: Column(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            if (leadingIcon != null) ...[
-                              leadingIcon,
-                              const SizedBox(width: 8),
-                            ],
-                            Flexible(
-                              child: Text(
-                                params.message,
-                                style: Theme.of(params.context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .copyWith(
-                                      color: textColor,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                            if (params.title != null) ...[
+                              Flexible(
+                                child: Text(
+                                  params.title!,
+                                  textAlign: TextAlign.end,
+                                  style: Theme.of(params.context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                        color: textColor,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                ),
                               ),
-                            ),
-                            if (trailingIcon != null) ...[
-                              const SizedBox(width: 8),
-                              trailingIcon,
+                              const SizedBox(height: 4),
                             ],
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                if (leadingIcon != null) ...[
+                                  leadingIcon,
+                                  const SizedBox(width: 8),
+                                ],
+                                Flexible(
+                                  child: Text(
+                                    params.message,
+                                    style: Theme.of(params.context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(
+                                          color: textColor,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                  ),
+                                ),
+                                if (trailingIcon != null) ...[
+                                  const SizedBox(width: 8),
+                                  trailingIcon,
+                                ],
+                              ],
+                            ),
                           ],
                         ),
                       ),
@@ -74,10 +98,12 @@ final class BaseCustomToastOverlayParams {
   final BuildContext context;
   final String message;
   final CustomToastAlignment alignment;
+  final String? title;
 
   BaseCustomToastOverlayParams({
     required this.context,
     required this.message,
     required this.alignment,
+    this.title,
   });
 }
