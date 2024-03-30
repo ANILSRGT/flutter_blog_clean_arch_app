@@ -7,7 +7,8 @@ enum AuthErrorCodes implements IErrorCodesEnum {
   signInUserNotFound(code: 2),
   signUp(code: 3),
   signUpUserExist(code: 4),
-  signUpUserInvalid(code: 5);
+  signUpUserInvalid(code: 5),
+  getCurrentUser(code: 6);
 
   const AuthErrorCodes({required this.code});
 
@@ -25,6 +26,8 @@ enum AuthErrorCodes implements IErrorCodesEnum {
         LocalKeys.errorsServerSignUpUserExists.local,
       AuthErrorCodes.signUpUserInvalid =>
         LocalKeys.errorsServerSignUpUserInvalid.local,
+      AuthErrorCodes.getCurrentUser =>
+        LocalKeys.errorsServerGetCurrentUser.local,
     };
   }
 }

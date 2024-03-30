@@ -11,6 +11,11 @@ class AuthRepository implements IAuthRepository {
   final IAuthRemoteDataSource remoteDataSource;
 
   @override
+  Future<ResponseModel<UserModel>> get currentUser async {
+    return remoteDataSource.currentUser;
+  }
+
+  @override
   Future<ResponseModel<UserModel>> signInWithEmailPassword({
     required String email,
     required String password,

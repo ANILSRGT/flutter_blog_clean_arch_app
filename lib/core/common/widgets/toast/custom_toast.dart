@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_blog_clean_arch_app/core/widgets/toast/base_custom_toast_overlay.dart';
-import 'package:flutter_blog_clean_arch_app/core/widgets/toast/custom_toast_error.dart';
-import 'package:flutter_blog_clean_arch_app/core/widgets/toast/custom_toast_info.dart';
-import 'package:flutter_blog_clean_arch_app/core/widgets/toast/custom_toast_success.dart';
-import 'package:flutter_blog_clean_arch_app/core/widgets/toast/custom_toast_warning.dart';
+import 'package:flutter_blog_clean_arch_app/core/common/widgets/toast/base_custom_toast_overlay.dart';
+import 'package:flutter_blog_clean_arch_app/core/common/widgets/toast/custom_toast_error.dart';
+import 'package:flutter_blog_clean_arch_app/core/common/widgets/toast/custom_toast_info.dart';
+import 'package:flutter_blog_clean_arch_app/core/common/widgets/toast/custom_toast_success.dart';
+import 'package:flutter_blog_clean_arch_app/core/common/widgets/toast/custom_toast_warning.dart';
 
 enum CustomToastAlignment { top, center, bottom }
 

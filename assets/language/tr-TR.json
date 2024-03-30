@@ -14,7 +14,8 @@
             "signInUserNotFound": "Kullanıcı bulunamadı!",
             "signUp": "Kayıt olurken bir hata oluştu!",
             "signUpUserExists": "Kullanıcı zaten mevcut!",
-            "signUpUserInvalid": "Kullanıcı geçersiz!"
+            "signUpUserInvalid": "Kullanıcı geçersiz!",
+            "getCurrentUser": "Kullanıcı bulunamadı!"
         }
     }
 }

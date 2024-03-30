@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_blog_clean_arch_app/core/widgets/toast/custom_toast.dart';
+import 'package:flutter_blog_clean_arch_app/core/common/widgets/toast/custom_toast.dart';
 
 class BaseCustomToastOverlay extends OverlayEntry {
   BaseCustomToastOverlay({

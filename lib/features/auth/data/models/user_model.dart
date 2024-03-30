@@ -1,4 +1,4 @@
-import 'package:flutter_blog_clean_arch_app/features/auth/domain/entities/user_entity.dart';
+import 'package:flutter_blog_clean_arch_app/core/common/entities/user_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'user_model.g.dart';
@@ -20,12 +20,11 @@ class UserModel extends UserEntity {
   Map<String, dynamic> toJson() => _$UserModelToJson(this);
 
   UserModel copyWith({
-    String? id,
     String? name,
     String? email,
   }) {
     return UserModel(
-      id: id ?? this.id,
+      id: id,
       name: name ?? this.name,
       email: email ?? this.email,
     );

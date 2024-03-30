@@ -1,5 +1,5 @@
 import 'package:flutter_blog_clean_arch_app/core/base/models/response_model.dart';
-import 'package:flutter_blog_clean_arch_app/features/auth/domain/entities/user_entity.dart';
+import 'package:flutter_blog_clean_arch_app/core/common/entities/user_entity.dart';
 
 abstract interface class IAuthRepository {
   Future<ResponseModel<UserEntity>> signUpWithEmailPassword({
@@ -11,5 +11,6 @@ abstract interface class IAuthRepository {
     required String email,
     required String password,
   });
+  Future<ResponseModel<UserEntity>> get currentUser;
   Future<void> signOut();
 }

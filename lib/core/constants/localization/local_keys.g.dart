@@ -15,4 +15,5 @@ final class LocalKeys {
 	static String get errorsServerSignUp => 'errors.server.signUp';
 	static String get errorsServerSignUpUserExists => 'errors.server.signUpUserExists';
 	static String get errorsServerSignUpUserInvalid => 'errors.server.signUpUserInvalid';
+	static String get errorsServerGetCurrentUser => 'errors.server.getCurrentUser';
 }

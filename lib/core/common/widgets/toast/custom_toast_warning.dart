@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_blog_clean_arch_app/core/widgets/toast/base_custom_toast_overlay.dart';
+import 'package:flutter_blog_clean_arch_app/core/common/widgets/toast/base_custom_toast_overlay.dart';
 
 class CustomToastWarning extends BaseCustomToastOverlay {
   CustomToastWarning(BaseCustomToastOverlayParams params)

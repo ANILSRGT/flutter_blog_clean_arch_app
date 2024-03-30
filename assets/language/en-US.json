@@ -14,7 +14,8 @@
             "signInUserNotFound": "User not found!",
             "signUp": "An error occurred while signing up!",
             "signUpUserExists": "User already exists!",
-            "signUpUserInvalid": "User is invalid!"
+            "signUpUserInvalid": "User is invalid!",
+            "getCurrentUser": "User not found!"
         }
     }
 }

@@ -8,6 +8,7 @@ mixin AuthPageMixin on State<AuthPage> {
 
   AuthPageCubit readAuthPageBloc() => context.read<AuthPageCubit>();
   AuthPageCubit watchAuthPageBloc() => context.watch<AuthPageCubit>();
+  AppCubit watchAppBloc() => context.watch<AppCubit>();
 
   @override
   void initState() {

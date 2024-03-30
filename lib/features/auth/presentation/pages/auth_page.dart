@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_blog_clean_arch_app/core/common/blocs/app/app_cubit.dart';
+import 'package:flutter_blog_clean_arch_app/core/common/widgets/toast/custom_toast.dart';
 import 'package:flutter_blog_clean_arch_app/core/extensions/string_extensions.dart';
 import 'package:flutter_blog_clean_arch_app/core/theme/app_pallete.dart';
-import 'package:flutter_blog_clean_arch_app/core/widgets/loader/loader_widget.dart';
-import 'package:flutter_blog_clean_arch_app/core/widgets/toast/custom_toast.dart';
 import 'package:flutter_blog_clean_arch_app/features/auth/presentation/blocs/auth_page/auth_page_cubit.dart';
 import 'package:flutter_blog_clean_arch_app/features/auth/presentation/widgets/auth_field.dart';
 import 'package:flutter_blog_clean_arch_app/features/auth/presentation/widgets/auth_gradient_button.dart';
@@ -26,21 +26,18 @@ class _AuthPageState extends State<AuthPage> with AuthPageMixin {
   }
 
   Widget _buildBody() {
-    return LoaderWidget(
-      isLoading: watchAuthPageBloc().state.isBusy,
-      child: Center(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(15),
-            child: _buildForm(),
-          ),
+    return Center(
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(15),
+          child: _buildForm(),
         ),
       ),
     );
   }
 
   Form _buildForm() {
-    final isSignIn = watchAuthPageBloc().state.isSignInState;
+    final isSignInState = watchAuthPageBloc().state.isSignInState;
     return Form(
       key: formKey,
       child: Column(
@@ -49,7 +46,7 @@ class _AuthPageState extends State<AuthPage> with AuthPageMixin {
         children: [
           _authTitle(),
           const SizedBox(height: 30),
-          if (!isSignIn) ...[
+          if (!isSignInState) ...[
             _nameField(),
             const SizedBox(height: 15),
           ],
@@ -66,9 +63,9 @@ class _AuthPageState extends State<AuthPage> with AuthPageMixin {
   }
 
   Text _authTitle() {
-    final isSignIn = watchAuthPageBloc().state.isSignInState;
+    final isSignInState = watchAuthPageBloc().state.isSignInState;
     return Text(
-      isSignIn ? 'Sign In' : 'Sign Up',
+      isSignInState ? 'Sign In' : 'Sign Up',
       textAlign: TextAlign.center,
       style: const TextStyle(
         fontSize: 50,
@@ -78,7 +75,7 @@ class _AuthPageState extends State<AuthPage> with AuthPageMixin {
   }
 
   AuthField _nameField() {
-    final isBusy = context.watch<AuthPageCubit>().state.isBusy;
+    final isBusy = watchAppBloc().state.isBusy;
     return AuthField(
       controller: nameController,
       hintText: 'Name',
@@ -87,7 +84,7 @@ class _AuthPageState extends State<AuthPage> with AuthPageMixin {
   }
 
   AuthField _emailField() {
-    final isBusy = context.watch<AuthPageCubit>().state.isBusy;
+    final isBusy = watchAppBloc().state.isBusy;
     return AuthField(
       controller: emailController,
       hintText: 'Email',
@@ -97,7 +94,7 @@ class _AuthPageState extends State<AuthPage> with AuthPageMixin {
   }
 
   AuthField _passwordField() {
-    final isBusy = context.watch<AuthPageCubit>().state.isBusy;
+    final isBusy = watchAppBloc().state.isBusy;
     return AuthField(
       controller: passwordController,
       hintText: 'Password',
@@ -108,28 +105,30 @@ class _AuthPageState extends State<AuthPage> with AuthPageMixin {
   }
 
   AuthGradientButton _authButton() {
-    final authPageState = watchAuthPageBloc().state;
+    final isSignInState = watchAuthPageBloc().state.isSignInState;
+    final isBusy = watchAppBloc().state.isBusy;
     return AuthGradientButton(
       onPressed: _onAuthButton,
-      text: authPageState.isSignInState ? 'Sign In' : 'Sign Up',
-      isBusy: authPageState.isBusy,
+      text: isSignInState ? 'Sign In' : 'Sign Up',
+      isBusy: isBusy,
     );
   }
 
   GestureDetector _haveAccountText() {
-    final authPageState = watchAuthPageBloc().state;
+    final isSignInState = watchAuthPageBloc().state.isSignInState;
+    final isBusy = watchAppBloc().state.isBusy;
     return GestureDetector(
-      onTap: authPageState.isBusy ? null : readAuthPageBloc().toggleAuthState,
+      onTap: isBusy ? null : readAuthPageBloc().toggleAuthState,
       child: RichText(
         textAlign: TextAlign.center,
         text: TextSpan(
-          text: authPageState.isSignInState
+          text: isSignInState
               ? "Don't have an account?\t"
               : 'Already have an account?\t',
           style: Theme.of(context).textTheme.titleMedium,
           children: [
             TextSpan(
-              text: authPageState.isSignInState ? 'Sign Up' : 'Sign In',
+              text: isSignInState ? 'Sign Up' : 'Sign In',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     color: AppPallete.gradient2,
                     fontWeight: FontWeight.bold,

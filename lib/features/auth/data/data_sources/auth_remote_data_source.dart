@@ -31,6 +31,36 @@ class AuthRemoteDataSource implements IAuthRemoteDataSource {
     );
   }
 
+  Session? get _userSession => _supabaseClient.auth.currentSession;
+
+  @override
+  Future<ResponseModel<UserModel>> get currentUser async {
+    try {
+      if (_userSession == null) {
+        return _authErrorCode<UserModel>(AuthErrorCodes.getCurrentUser);
+      }
+
+      final userData = await _supabaseClient
+          .from('profiles')
+          .select()
+          .eq(
+            'id',
+            _userSession!.user.id,
+          )
+          .single();
+
+      userData.addAll({
+        'email': _userSession!.user.email,
+      });
+
+      final user = UserModel.fromJson(userData);
+
+      return ResponseModelSuccess(data: user);
+    } catch (e) {
+      return _authErrorCode<UserModel>(AuthErrorCodes.getCurrentUser);
+    }
+  }
+
   @override
   Future<ResponseModel<UserModel>> signInWithEmailPassword({
     required String email,
@@ -41,7 +71,6 @@ class AuthRemoteDataSource implements IAuthRemoteDataSource {
         email: email,
         password: password,
       );
-
       if (res.user == null) {
         return _authErrorCode<UserModel>(AuthErrorCodes.signInUserNotFound);
       }
@@ -51,6 +80,11 @@ class AuthRemoteDataSource implements IAuthRemoteDataSource {
         name: res.user!.userMetadata!['name'] as String,
         email: email,
       );
+
+      final current = await currentUser;
+      if (current.isFail) log('currentUser: ${current.asFail.throwMessage}');
+      if (current.isSuccess) log('currentUser: ${current.asSuccess.data}');
+
       return ResponseModelSuccess(data: user);
     } catch (e) {
       return _authErrorCode<UserModel>(AuthErrorCodes.signIn);
@@ -93,7 +127,6 @@ class AuthRemoteDataSource implements IAuthRemoteDataSource {
       );
       return ResponseModelSuccess(data: user);
     } catch (e) {
-      log(e.toString());
       return _authErrorCode<UserModel>(AuthErrorCodes.signUp);
     }
   }
