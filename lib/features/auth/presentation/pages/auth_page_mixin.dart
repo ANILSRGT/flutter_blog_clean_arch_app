@@ -55,9 +55,10 @@ mixin AuthPageMixin on State<AuthPage> {
 
     final errors = <String>[];
     if (!value.minCharacters(8)) {
-      errors.add(LocalKeys
-          .pagesAuthInputsPasswordValidatesMinLengthMultipleArgs1
-          .localWithArgs(['8']));
+      errors.add(
+        LocalKeys.pagesAuthInputsPasswordValidatesMinLengthMultipleArgs1
+            .localWithArgs(['8']),
+      );
     }
 
     if (!value.upperCaseLetterValid) {

@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blog_clean_arch_app/core/constants/route/route_guards.dart';
+import 'package:flutter_blog_clean_arch_app/core/extensions/collection_extensions.dart';
 import 'package:flutter_blog_clean_arch_app/features/auth/presentation/pages/auth_page.dart';
 import 'package:flutter_blog_clean_arch_app/features/blog/presentation/pages/add_new_blog_page.dart';
 import 'package:flutter_blog_clean_arch_app/features/blog/presentation/pages/blog_page.dart';
 
 enum RouteKeys {
-  notFound(
-    path: '/not-found',
-    page: _NotFoundPage(),
-  ),
   auth(
     path: '/auth',
     page: AuthPage(),
@@ -33,25 +30,33 @@ enum RouteKeys {
   final Widget page;
   final Set<RouteGuards> guards;
 
-  static RouteKeys getPageKey(String path) {
-    if (!RouteKeys.values.any((element) => element.path == path)) {
-      return RouteKeys.notFound;
-    }
+  static RouteKeys? getPageKey(String? path) {
     final route =
-        RouteKeys.values.firstWhere((element) => element.path == path);
+        RouteKeys.values.firstWhereOrNull((element) => element.path == path);
+    return route;
+  }
+
+  static RouteKeys? getPageKeyByPage(Widget? page) {
+    final route =
+        RouteKeys.values.firstWhereOrNull((element) => element.page == page);
     return route;
   }
 }
 
-class _NotFoundPage extends StatelessWidget {
-  const _NotFoundPage();
+class NotFoundPage extends StatelessWidget {
+  const NotFoundPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pushNamedAndRemoveUntil(
+              RouteKeys.blog.path,
+              (route) => false,
+            );
+          },
           icon: const Icon(
             Icons.home_rounded,
           ),

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter_blog_clean_arch_app/core/base/models/response_model.dart';
 import 'package:flutter_blog_clean_arch_app/core/constants/errors/error_content_types.dart';
 import 'package:flutter_blog_clean_arch_app/core/constants/errors/error_types.dart';
@@ -71,21 +69,14 @@ class AuthRemoteDataSource implements IAuthRemoteDataSource {
         email: email,
         password: password,
       );
+
       if (res.user == null) {
         return _authErrorCode<UserModel>(AuthErrorCodes.signInUserNotFound);
       }
 
-      final user = UserModel(
-        id: res.user!.id,
-        name: res.user!.userMetadata!['name'] as String,
-        email: email,
-      );
-
       final current = await currentUser;
-      if (current.isFail) log('currentUser: ${current.asFail.throwMessage}');
-      if (current.isSuccess) log('currentUser: ${current.asSuccess.data}');
 
-      return ResponseModelSuccess(data: user);
+      return ResponseModelSuccess(data: current.asSuccess.data);
     } catch (e) {
       return _authErrorCode<UserModel>(AuthErrorCodes.signIn);
     }
