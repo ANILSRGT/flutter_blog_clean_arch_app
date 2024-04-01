@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_blog_clean_arch_app/core/common/blocs/app/app_cubit.dart';
 import 'package:flutter_blog_clean_arch_app/core/common/widgets/toast/custom_toast.dart';
+import 'package:flutter_blog_clean_arch_app/core/constants/localization/local_keys.g.dart';
 import 'package:flutter_blog_clean_arch_app/core/extensions/string_extensions.dart';
 import 'package:flutter_blog_clean_arch_app/core/theme/app_pallete.dart';
 import 'package:flutter_blog_clean_arch_app/features/auth/presentation/blocs/auth_page/auth_page_cubit.dart';
@@ -65,7 +66,9 @@ class _AuthPageState extends State<AuthPage> with AuthPageMixin {
   Text _authTitle() {
     final isSignInState = watchAuthPageBloc().state.isSignInState;
     return Text(
-      isSignInState ? 'Sign In' : 'Sign Up',
+      isSignInState
+          ? LocalKeys.pagesAuthSignIn.local
+          : LocalKeys.pagesAuthSignUp.local,
       textAlign: TextAlign.center,
       style: const TextStyle(
         fontSize: 50,
@@ -78,7 +81,8 @@ class _AuthPageState extends State<AuthPage> with AuthPageMixin {
     final isBusy = watchAppBloc().state.isBusy;
     return AuthField(
       controller: nameController,
-      hintText: 'Name',
+      hintText: LocalKeys.pagesAuthInputsNameLabel.local,
+      validator: _nameValidator,
       isBusy: isBusy,
     );
   }
@@ -87,7 +91,7 @@ class _AuthPageState extends State<AuthPage> with AuthPageMixin {
     final isBusy = watchAppBloc().state.isBusy;
     return AuthField(
       controller: emailController,
-      hintText: 'Email',
+      hintText: LocalKeys.pagesAuthInputsEmailLabel.local,
       validator: _emailValidator,
       isBusy: isBusy,
     );
@@ -97,7 +101,7 @@ class _AuthPageState extends State<AuthPage> with AuthPageMixin {
     final isBusy = watchAppBloc().state.isBusy;
     return AuthField(
       controller: passwordController,
-      hintText: 'Password',
+      hintText: LocalKeys.pagesAuthInputsPasswordLabel.local,
       validator: _passwordValidator,
       isObscureText: true,
       isBusy: isBusy,
@@ -109,7 +113,9 @@ class _AuthPageState extends State<AuthPage> with AuthPageMixin {
     final isBusy = watchAppBloc().state.isBusy;
     return AuthGradientButton(
       onPressed: _onAuthButton,
-      text: isSignInState ? 'Sign In' : 'Sign Up',
+      text: isSignInState
+          ? LocalKeys.pagesAuthSignIn.local
+          : LocalKeys.pagesAuthSignUp.local,
       isBusy: isBusy,
     );
   }
@@ -123,12 +129,14 @@ class _AuthPageState extends State<AuthPage> with AuthPageMixin {
         textAlign: TextAlign.center,
         text: TextSpan(
           text: isSignInState
-              ? "Don't have an account?\t"
-              : 'Already have an account?\t',
+              ? ('${LocalKeys.pagesAuthHaveAccountDontText.local}\t')
+              : ('${LocalKeys.pagesAuthHaveAccountAlreadyText.local}\t'),
           style: Theme.of(context).textTheme.titleMedium,
           children: [
             TextSpan(
-              text: isSignInState ? 'Sign Up' : 'Sign In',
+              text: isSignInState
+                  ? LocalKeys.pagesAuthHaveAccountDontLink.local
+                  : LocalKeys.pagesAuthHaveAccountAlreadyLink.local,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     color: AppPallete.gradient2,
                     fontWeight: FontWeight.bold,

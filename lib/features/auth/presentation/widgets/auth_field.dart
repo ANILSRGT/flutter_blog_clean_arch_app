@@ -4,9 +4,9 @@ class AuthField extends StatelessWidget {
   const AuthField({
     required this.hintText,
     required this.controller,
+    required this.validator,
     super.key,
     this.focusNode,
-    this.validator,
     this.isObscureText = false,
     this.isBusy = false,
   });
@@ -28,13 +28,7 @@ class AuthField extends StatelessWidget {
       decoration: InputDecoration(
         hintText: hintText,
       ),
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return '$hintText is missing!';
-        }
-
-        return validator?.call(value);
-      },
+      validator: validator,
     );
   }
 }

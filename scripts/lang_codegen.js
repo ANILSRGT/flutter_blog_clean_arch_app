@@ -50,7 +50,7 @@ const dartCode =
     .map(key => {
       const args = [...constants[key].value.matchAll(/{([^}]*)}/g)];
       const argsCount = args.length;
-      return `\tstatic String get ${key}${argsCount > 0 ? `Args$${argsCount}` : ""} => '${constants[key].key}';`;
+      return `\tstatic String get ${key}${argsCount > 0 ? `Args${argsCount}` : ""} => '${constants[key].key}';`;
     })
     .join("\n") +
   "\n}";

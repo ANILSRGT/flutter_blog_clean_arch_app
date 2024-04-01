@@ -25,37 +25,51 @@ mixin AuthPageMixin on State<AuthPage> {
     super.dispose();
   }
 
+  String? _nameValidator(String? value) {
+    if (value.isEmptyOrNull) {
+      return LocalKeys.pagesAuthInputsNameValidatesRequired.local;
+    }
+
+    if (!value.minCharacters(2)) {
+      return LocalKeys.pagesAuthInputsNameValidatesMinLengthMultipleArgs1
+          .localWithArgs(['2']);
+    }
+    return null;
+  }
+
   String? _emailValidator(String? value) {
     if (value.isEmptyOrNull) {
-      return 'Email is missing!';
+      return LocalKeys.pagesAuthInputsEmailValidatesRequired.local;
     }
 
     if (!value.emailValid) {
-      return 'Email is invalid!';
+      return LocalKeys.pagesAuthInputsEmailValidatesInvalid.local;
     }
     return null;
   }
 
   String? _passwordValidator(String? value) {
     if (value.isEmptyOrNull) {
-      return 'Password is missing!';
+      return LocalKeys.pagesAuthInputsPasswordValidatesRequired.local;
     }
 
     final errors = <String>[];
     if (!value.minCharacters(8)) {
-      errors.add('Min 8 characters');
+      errors.add(LocalKeys
+          .pagesAuthInputsPasswordValidatesMinLengthMultipleArgs1
+          .localWithArgs(['8']));
     }
 
     if (!value.upperCaseLetterValid) {
-      errors.add('Uppercase letter');
+      errors.add(LocalKeys.pagesAuthInputsPasswordValidatesUppercaseNeed.local);
     }
 
     if (!value.lowerCaseLetterValid) {
-      errors.add('Lowercase letter');
+      errors.add(LocalKeys.pagesAuthInputsPasswordValidatesLowercaseNeed.local);
     }
 
     if (!value.numberValid) {
-      errors.add('Number');
+      errors.add(LocalKeys.pagesAuthInputsPasswordValidatesNumberNeed.local);
     }
 
     return errors.isNotEmpty ? errors.map((e) => '• $e').join('\n') : null;

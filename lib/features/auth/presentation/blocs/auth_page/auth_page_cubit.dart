@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_blog_clean_arch_app/core/base/models/response_model.dart';
@@ -80,7 +78,6 @@ class AuthPageCubit extends Cubit<AuthPageState> {
     _appCubit.setBusy(true);
     final res =
         await Injection.instance.read<AuthCurrentUserUseCase>().execute();
-    log('checkUser: ${res.isSuccess ? res.asSuccess.data : res.asFail.throwMessage}');
     if (res.isSuccess) {
       _appUserCubit.updateUser(res.asSuccess.data);
     }

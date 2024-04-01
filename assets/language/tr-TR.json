@@ -17,5 +17,56 @@
             "signUpUserInvalid": "Kullanıcı geçersiz!",
             "getCurrentUser": "Kullanıcı bulunamadı!"
         }
+    },
+    "pages": {
+        "auth": {
+            "signIn": "Giriş Yap",
+            "signUp": "Kayıt Ol",
+            "haveAccount": {
+                "dont": {
+                    "text": "Hesabınız yok mu?",
+                    "link": "Kayıt Ol"
+                },
+                "already": {
+                    "text": "Zaten bir hesabınız var mı?",
+                    "link": "Giriş Yap"
+                }
+            },
+            "inputs": {
+                "name": {
+                    "label": "Ad",
+                    "placeholder": "Adınızı giriniz.",
+                    "validates": {
+                        "required": "Ad zorunludur!",
+                        "minLength": {
+                            "single": "Min 1 karakter",
+                            "multiple": "Min {} karakter"
+                        }
+                    }
+                },
+                "email": {
+                    "label": "Eposta",
+                    "placeholder": "Eposta adresinizi giriniz.",
+                    "validates": {
+                        "required": "Eposta zorunludur!",
+                        "invalid": "Eposta geçersiz!"
+                    }
+                },
+                "password": {
+                    "label": "Şifre",
+                    "placeholder": "Şifrenizi giriniz.",
+                    "validates": {
+                        "required": "Şifre zorunludur!",
+                        "minLength": {
+                            "single": "Min 1 karakter",
+                            "multiple": "Min {} karakter"
+                        },
+                        "uppercaseNeed": "Büyük harf",
+                        "lowercaseNeed": "Küçük harf",
+                        "numberNeed": "Rakam"
+                    }
+                }
+            }
+        }
     }
 }

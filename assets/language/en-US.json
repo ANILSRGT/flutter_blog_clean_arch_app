@@ -17,5 +17,56 @@
             "signUpUserInvalid": "User is invalid!",
             "getCurrentUser": "User not found!"
         }
+    },
+    "pages": {
+        "auth": {
+            "signIn": "Sign In",
+            "signUp": "Sign Up",
+            "haveAccount": {
+                "dont": {
+                    "text": "Don't have an account?",
+                    "link": "Sign Up"
+                },
+                "already": {
+                    "text": "Already have an account?",
+                    "link": "Sign In"
+                }
+            },
+            "inputs": {
+                "name": {
+                    "label": "Name",
+                    "placeholder": "Enter your name",
+                    "validates": {
+                        "required": "Name is required!",
+                        "minLength": {
+                            "single": "Min 1 character",
+                            "multiple": "Min {} characters"
+                        }
+                    }
+                },
+                "email": {
+                    "label": "Email",
+                    "placeholder": "Enter your email",
+                    "validates": {
+                        "required": "Email is required!",
+                        "invalid": "Email is invalid!"
+                    }
+                },
+                "password": {
+                    "label": "Password",
+                    "placeholder": "Enter your password",
+                    "validates": {
+                        "required": "Password is required!",
+                        "minLength": {
+                            "single": "Min 1 character",
+                            "multiple": "Min {} characters"
+                        },
+                        "uppercaseNeed": "Uppercase letter",
+                        "lowercaseNeed": "Lowercase letter",
+                        "numberNeed": "Number"
+                    }
+                }
+            }
+        }
     }
 }
