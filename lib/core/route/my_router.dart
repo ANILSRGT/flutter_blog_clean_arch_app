@@ -9,13 +9,20 @@ import 'package:flutter_blog_clean_arch_app/core/common/blocs/app_user/app_user_
 import 'package:flutter_blog_clean_arch_app/core/common/widgets/loader/loader_widget.dart';
 import 'package:flutter_blog_clean_arch_app/core/constants/route/route_guards.dart';
 import 'package:flutter_blog_clean_arch_app/core/constants/route/route_keys.dart';
+import 'package:flutter_blog_clean_arch_app/core/route/irouternav.dart';
 import 'package:flutter_blog_clean_arch_app/features/auth/presentation/blocs/auth_page/auth_page_cubit.dart';
+
+part 'routernavs/adaptive_routernav.dart';
 
 final class MyRouter {
   MyRouter._();
   static MyRouter instance = MyRouter._();
 
   bool _firstTime = true;
+
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+  IRouterNav get routerNav => _DefaultRouterNav(navigatorKey: navigatorKey);
 
   Map<String, Widget Function(BuildContext)> get routes => {
         RouteKeys.auth.path: (ctx) =>
@@ -27,7 +34,7 @@ final class MyRouter {
       };
 
   Route<dynamic> navigateTo(String? path) {
-    return kIsWeb || !Platform.isIOS
+    return kIsWeb || (!Platform.isIOS && !Platform.isMacOS)
         ? MaterialPageRoute(
             builder: (ctx) => _generateRouteWidget(ctx, path),
           )

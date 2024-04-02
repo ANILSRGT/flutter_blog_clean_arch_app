@@ -9,12 +9,6 @@ import 'package:flutter_blog_clean_arch_app/features/auth/data/models/user_model
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthRemoteDataSource implements IAuthRemoteDataSource {
-  AuthRemoteDataSource({
-    required SupabaseClient supabaseClient,
-  }) : _supabaseClient = supabaseClient;
-
-  final SupabaseClient _supabaseClient;
-
   ResponseModelFail<T> _authErrorCode<T>(AuthErrorCodes code) {
     final toErrorCode = Errors.toErrorCode(
       type: ErrorTypes.server,
@@ -29,6 +23,7 @@ class AuthRemoteDataSource implements IAuthRemoteDataSource {
     );
   }
 
+  SupabaseClient get _supabaseClient => Supabase.instance.client;
   Session? get _userSession => _supabaseClient.auth.currentSession;
 
   @override

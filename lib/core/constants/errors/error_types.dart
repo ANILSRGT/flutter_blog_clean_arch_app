@@ -1,7 +1,6 @@
 enum ErrorTypes {
-  server(
-    codeCharacter: 'S',
-  );
+  server(codeCharacter: 'S'),
+  unknown(codeCharacter: 'U');
 
   const ErrorTypes({
     required this.codeCharacter,

@@ -21,5 +21,12 @@ final class AppTheme {
       enabledBorder: _border(),
       focusedBorder: _border(color: AppPallete.gradient2),
     ),
+    chipTheme: const ChipThemeData(
+      color: MaterialStatePropertyAll(
+        AppPallete.background,
+      ),
+      side: BorderSide(color: AppPallete.border),
+      selectedColor: AppPallete.gradient1,
+    ),
   );
 }

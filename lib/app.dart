@@ -21,6 +21,7 @@ class _MainAppState extends State<MainApp> {
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
+      navigatorKey: MyRouter.instance.navigatorKey,
       routes: MyRouter.instance.routes,
       initialRoute: RouteKeys.blog.path,
     );

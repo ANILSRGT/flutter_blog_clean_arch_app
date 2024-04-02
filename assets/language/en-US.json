@@ -10,12 +10,19 @@
     "errors": {
         "global": "An error occurred!",
         "server": {
-            "signIn": "An error occurred while signing in!",
-            "signInUserNotFound": "User not found!",
-            "signUp": "An error occurred while signing up!",
-            "signUpUserExists": "User already exists!",
-            "signUpUserInvalid": "User is invalid!",
-            "getCurrentUser": "User not found!"
+            "auth": {
+                "signIn": "An error occurred while signing in!",
+                "signInUserNotFound": "User not found!",
+                "signUp": "An error occurred while signing up!",
+                "signUpUserExists": "User already exists!",
+                "signUpUserInvalid": "User is invalid!",
+                "getCurrentUser": "User not found!"
+            }
+        },
+        "unknown": {
+            "utils": {
+                "pickImage": "Error while picking image!"
+            }
         }
     },
     "pages": {
@@ -65,6 +72,23 @@
                         "lowercaseNeed": "Lowercase letter",
                         "numberNeed": "Number"
                     }
+                }
+            }
+        },
+        "blog": {
+            "title": "Blog"
+        },
+        "addNewBlog": {
+            "title": "New Blog",
+            "inputs": {
+                "selectImage": {
+                    "label": "Select Image"
+                },
+                "title": {
+                    "label": "Title"
+                },
+                "content": {
+                    "label": "Content"
                 }
             }
         }

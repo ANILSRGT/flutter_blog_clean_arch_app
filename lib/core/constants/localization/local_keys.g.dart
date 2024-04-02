@@ -10,12 +10,13 @@ final class LocalKeys {
 	static String get metaCountry => 'meta.country';
 	static String get metaDisplayName => 'meta.displayName';
 	static String get errorsGlobal => 'errors.global';
-	static String get errorsServerSignIn => 'errors.server.signIn';
-	static String get errorsServerSignInUserNotFound => 'errors.server.signInUserNotFound';
-	static String get errorsServerSignUp => 'errors.server.signUp';
-	static String get errorsServerSignUpUserExists => 'errors.server.signUpUserExists';
-	static String get errorsServerSignUpUserInvalid => 'errors.server.signUpUserInvalid';
-	static String get errorsServerGetCurrentUser => 'errors.server.getCurrentUser';
+	static String get errorsServerAuthSignIn => 'errors.server.auth.signIn';
+	static String get errorsServerAuthSignInUserNotFound => 'errors.server.auth.signInUserNotFound';
+	static String get errorsServerAuthSignUp => 'errors.server.auth.signUp';
+	static String get errorsServerAuthSignUpUserExists => 'errors.server.auth.signUpUserExists';
+	static String get errorsServerAuthSignUpUserInvalid => 'errors.server.auth.signUpUserInvalid';
+	static String get errorsServerAuthGetCurrentUser => 'errors.server.auth.getCurrentUser';
+	static String get errorsUnknownUtilsPickImage => 'errors.unknown.utils.pickImage';
 	static String get pagesAuthSignIn => 'pages.auth.signIn';
 	static String get pagesAuthSignUp => 'pages.auth.signUp';
 	static String get pagesAuthHaveAccountDontText => 'pages.auth.haveAccount.dont.text';
@@ -39,4 +40,9 @@ final class LocalKeys {
 	static String get pagesAuthInputsPasswordValidatesUppercaseNeed => 'pages.auth.inputs.password.validates.uppercaseNeed';
 	static String get pagesAuthInputsPasswordValidatesLowercaseNeed => 'pages.auth.inputs.password.validates.lowercaseNeed';
 	static String get pagesAuthInputsPasswordValidatesNumberNeed => 'pages.auth.inputs.password.validates.numberNeed';
+	static String get pagesBlogTitle => 'pages.blog.title';
+	static String get pagesAddNewBlogTitle => 'pages.addNewBlog.title';
+	static String get pagesAddNewBlogInputsSelectImageLabel => 'pages.addNewBlog.inputs.selectImage.label';
+	static String get pagesAddNewBlogInputsTitleLabel => 'pages.addNewBlog.inputs.title.label';
+	static String get pagesAddNewBlogInputsContentLabel => 'pages.addNewBlog.inputs.content.label';
 }

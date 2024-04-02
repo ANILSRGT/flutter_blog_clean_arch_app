@@ -18,16 +18,16 @@ enum AuthErrorCodes implements IErrorCodesEnum {
   @override
   String get message {
     return switch (this) {
-      AuthErrorCodes.signIn => LocalKeys.errorsServerSignIn.local,
+      AuthErrorCodes.signIn => LocalKeys.errorsServerAuthSignIn.local,
       AuthErrorCodes.signInUserNotFound =>
-        LocalKeys.errorsServerSignInUserNotFound.local,
-      AuthErrorCodes.signUp => LocalKeys.errorsServerSignUp.local,
+        LocalKeys.errorsServerAuthSignInUserNotFound.local,
+      AuthErrorCodes.signUp => LocalKeys.errorsServerAuthSignUp.local,
       AuthErrorCodes.signUpUserExist =>
-        LocalKeys.errorsServerSignUpUserExists.local,
+        LocalKeys.errorsServerAuthSignUpUserExists.local,
       AuthErrorCodes.signUpUserInvalid =>
-        LocalKeys.errorsServerSignUpUserInvalid.local,
+        LocalKeys.errorsServerAuthSignUpUserInvalid.local,
       AuthErrorCodes.getCurrentUser =>
-        LocalKeys.errorsServerGetCurrentUser.local,
+        LocalKeys.errorsServerAuthGetCurrentUser.local,
     };
   }
 }

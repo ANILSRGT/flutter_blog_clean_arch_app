@@ -10,12 +10,19 @@
     "errors": {
         "global": "Bir hata oluştu!",
         "server": {
-            "signIn": "Giriş yaparken bir hata oluştu!",
-            "signInUserNotFound": "Kullanıcı bulunamadı!",
-            "signUp": "Kayıt olurken bir hata oluştu!",
-            "signUpUserExists": "Kullanıcı zaten mevcut!",
-            "signUpUserInvalid": "Kullanıcı geçersiz!",
-            "getCurrentUser": "Kullanıcı bulunamadı!"
+            "auth": {
+                "signIn": "Giriş yaparken bir hata oluştu!",
+                "signInUserNotFound": "Kullanıcı bulunamadı!",
+                "signUp": "Kayıt olurken bir hata oluştu!",
+                "signUpUserExists": "Kullanıcı zaten mevcut!",
+                "signUpUserInvalid": "Kullanıcı geçersiz!",
+                "getCurrentUser": "Kullanıcı bulunamadı!"
+            }
+        },
+        "unknown": {
+            "utils": {
+                "pickImage": "Resim seçerken hata!"
+            }
         }
     },
     "pages": {
@@ -65,6 +72,23 @@
                         "lowercaseNeed": "Küçük harf",
                         "numberNeed": "Rakam"
                     }
+                }
+            }
+        },
+        "blog": {
+            "title": "Blog"
+        },
+        "addNewBlog": {
+            "title": "Yeni Blog",
+            "inputs": {
+                "selectImage": {
+                    "label": "Resim Seç"
+                },
+                "title": {
+                    "label": "Başlık"
+                },
+                "content": {
+                    "label": "İçerik"
                 }
             }
         }

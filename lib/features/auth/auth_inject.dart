@@ -36,9 +36,7 @@ final class AuthInject implements IInject {
       ..registerLazySingleton(AppCubit.new)
       ..registerLazySingleton(AppUserCubit.new)
       // Data Sources
-      ..registerFactory<IAuthRemoteDataSource>(
-        () => AuthRemoteDataSource(supabaseClient: sl()),
-      )
+      ..registerFactory<IAuthRemoteDataSource>(AuthRemoteDataSource.new)
       // Repositories
       ..registerFactory<IAuthRepository>(
         () => AuthRepository(remoteDataSource: sl()),
