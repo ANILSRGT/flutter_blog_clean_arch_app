@@ -18,3 +18,7 @@ final class AuthState with EquatableMixin {
     );
   }
 }
+
+final class AuthStateInitial extends AuthState {
+  const AuthStateInitial() : super(isSignInState: true);
+}

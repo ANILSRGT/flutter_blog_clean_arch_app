@@ -9,6 +9,7 @@ import 'package:flutter_blog_clean_arch_app/core/env/app_env_keys.dart';
 import 'package:flutter_blog_clean_arch_app/core/env/app_envs.dart';
 import 'package:flutter_blog_clean_arch_app/core/managers/localization/localization_manager.dart';
 import 'package:flutter_blog_clean_arch_app/features/auth/presentation/blocs/auth/auth_cubit.dart';
+import 'package:flutter_blog_clean_arch_app/features/blog/presentation/blocs/blog/blog_cubit.dart';
 import 'package:flutter_blog_clean_arch_app/injection.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -33,6 +34,7 @@ Future<void> main() async {
           BlocProvider(create: (_) => Injection.instance.read<AppCubit>()),
           BlocProvider(create: (_) => Injection.instance.read<AppUserCubit>()),
           BlocProvider(create: (_) => Injection.instance.read<AuthCubit>()),
+          BlocProvider(create: (_) => Injection.instance.read<BlogCubit>()),
         ],
         child: const MainApp(),
       ),

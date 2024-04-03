@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_blog_clean_arch_app/core/constants/data/blog_topics.dart';
 
 class TopicChip extends StatelessWidget {
   const TopicChip({
-    required this.label,
+    required this.topic,
     required this.onSelected,
     required this.isSelected,
     super.key,
   });
 
-  final String label;
-  final void Function(String label) onSelected;
+  final BlogTopics topic;
+  final void Function(BlogTopics topic) onSelected;
   final bool isSelected;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => onSelected(label),
+      onTap: () => onSelected(topic),
       child: Chip(
         color: isSelected
             ? MaterialStatePropertyAll(
@@ -23,7 +24,7 @@ class TopicChip extends StatelessWidget {
               )
             : null,
         side: isSelected ? BorderSide.none : null,
-        label: Text(label),
+        label: Text(topic.value),
       ),
     );
   }

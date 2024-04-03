@@ -2,13 +2,11 @@ import 'dart:typed_data';
 
 import 'package:flutter_blog_clean_arch_app/core/base/models/response_model.dart';
 import 'package:flutter_blog_clean_arch_app/core/base/usecase.dart';
-import 'package:flutter_blog_clean_arch_app/core/common/entities/blog_entity.dart';
-import 'package:flutter_blog_clean_arch_app/core/common/entities/entity_with_id.dart';
+import 'package:flutter_blog_clean_arch_app/core/common/entities/blog/blog_entity.dart';
 import 'package:flutter_blog_clean_arch_app/features/blog/domain/repositories/iblog_repository.dart';
 
 class BlogUploadUseCase
-    implements
-        UseCaseWithParams<EntityWithId<BlogEntity>, BlogUploadUseCaseParams> {
+    implements UseCaseWithParams<BlogEntity, BlogUploadUseCaseParams> {
   BlogUploadUseCase({
     required this.blogRepository,
   });
@@ -16,7 +14,7 @@ class BlogUploadUseCase
   final IBlogRepository blogRepository;
 
   @override
-  Future<ResponseModel<EntityWithId<BlogEntity>>> execute(
+  Future<ResponseModel<BlogEntity>> execute(
     BlogUploadUseCaseParams params,
   ) async {
     return blogRepository.uploadBlog(

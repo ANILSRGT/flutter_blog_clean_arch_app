@@ -8,6 +8,7 @@ mixin AuthPageMixin on State<AuthPage> {
 
   AuthCubit readAuthBloc() => context.read<AuthCubit>();
   AuthCubit watchAuthBloc() => context.watch<AuthCubit>();
+  AppCubit _readAppBloc() => context.read<AppCubit>();
   AppCubit watchAppBloc() => context.watch<AppCubit>();
 
   @override
@@ -83,6 +84,7 @@ mixin AuthPageMixin on State<AuthPage> {
 
     final isSignIn = readAuthBloc().state.isSignInState;
 
+    _readAppBloc().setBusy(true);
     final res = await (isSignIn
         ? readAuthBloc().signIn(
             email: emailController.text.trim(),
@@ -101,7 +103,9 @@ mixin AuthPageMixin on State<AuthPage> {
         title: res.asFail.code,
         message: res.asFail.message,
       );
+      _readAppBloc().setBusy(false);
       return;
     }
+    _readAppBloc().setBusy(false);
   }
 }

@@ -1,6 +1,4 @@
 import 'package:flutter_blog_clean_arch_app/core/base/iinject.dart';
-import 'package:flutter_blog_clean_arch_app/core/common/blocs/app/app_cubit.dart';
-import 'package:flutter_blog_clean_arch_app/core/common/blocs/app_user/app_user_cubit.dart';
 import 'package:flutter_blog_clean_arch_app/features/auth/data/data_sources/auth_remote_data_source.dart';
 import 'package:flutter_blog_clean_arch_app/features/auth/data/data_sources/iauth_remote_data_source.dart';
 import 'package:flutter_blog_clean_arch_app/features/auth/data/repositories/auth_repository.dart';
@@ -11,7 +9,6 @@ import 'package:flutter_blog_clean_arch_app/features/auth/domain/usecases/auth_s
 import 'package:flutter_blog_clean_arch_app/features/auth/domain/usecases/auth_sign_up_usecase.dart';
 import 'package:flutter_blog_clean_arch_app/features/auth/presentation/blocs/auth/auth_cubit.dart';
 import 'package:get_it/get_it.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 final class AuthInject implements IInject {
   AuthInject._();
@@ -19,22 +16,8 @@ final class AuthInject implements IInject {
 
   @override
   Future<void> init(GetIt sl) async {
-    // final supabaseAdminClient = SupabaseClient(
-    //   AppSecrets.instance.read(AppEnvKeys.supabaseUrl),
-    //   AppSecrets.instance.read(AppEnvKeys.supabaseServiceRoleKey),
-    //   authOptions: AuthClientOptions(
-    //     pkceAsyncStorage: SharedPreferencesGotrueAsyncStorage(),
-    //   ),
-    // );
-    final supabaseClient = Supabase.instance.client;
-
-    // Registering dependencies
+    // Data Sources
     sl
-      ..registerLazySingleton(() => supabaseClient)
-      // Core Blocs
-      ..registerLazySingleton(AppCubit.new)
-      ..registerLazySingleton(AppUserCubit.new)
-      // Data Sources
       ..registerFactory<IAuthRemoteDataSource>(
         () => AuthRemoteDataSource(supabaseClient: sl()),
       )
@@ -50,7 +33,6 @@ final class AuthInject implements IInject {
       // Blocs
       ..registerLazySingleton(
         () => AuthCubit(
-          appCubit: sl(),
           appUserCubit: sl(),
         ),
       );

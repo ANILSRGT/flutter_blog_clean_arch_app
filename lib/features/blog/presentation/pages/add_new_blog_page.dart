@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blog_clean_arch_app/core/common/widgets/container/app_container.dart';
 import 'package:flutter_blog_clean_arch_app/core/common/widgets/image/image_aspect_container.dart';
+import 'package:flutter_blog_clean_arch_app/core/constants/data/blog_topics.dart';
 import 'package:flutter_blog_clean_arch_app/core/constants/localization/local_keys.g.dart';
 import 'package:flutter_blog_clean_arch_app/core/extensions/context_extensions.dart';
 import 'package:flutter_blog_clean_arch_app/core/extensions/string_extensions.dart';
@@ -26,7 +27,7 @@ class _AddNewBlogPageState extends State<AddNewBlogPage>
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: onSaveBlog,
             icon: const Icon(Icons.save_rounded),
           ),
         ],
@@ -39,24 +40,27 @@ class _AddNewBlogPageState extends State<AddNewBlogPage>
     return SingleChildScrollView(
       child: AppContainer(
         padding: const EdgeInsets.all(20),
-        child: _bodyContent(),
+        child: _buildForm(),
       ),
     );
   }
 
-  Column _bodyContent() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        _blogImageSelectFieldButton(),
-        const SizedBox(height: 20),
-        _topicsList(),
-        const SizedBox(height: 20),
-        _titleField(),
-        const SizedBox(height: 20),
-        _contentField(),
-      ],
+  Form _buildForm() {
+    return Form(
+      key: formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _blogImageSelectFieldButton(),
+          const SizedBox(height: 20),
+          _topicsList(),
+          const SizedBox(height: 20),
+          _titleField(),
+          const SizedBox(height: 20),
+          _contentField(),
+        ],
+      ),
     );
   }
 
@@ -105,14 +109,14 @@ class _AddNewBlogPageState extends State<AddNewBlogPage>
 
   TopicList _topicsList() {
     // TODO: Remove dummy data and implement real data
-    return const TopicList(
-      onChanged: null,
-      topics: [
-        'Technology',
-        'Business',
-        'Programming',
-        'Entertainment',
-      ],
+    return TopicList(
+      onChanged: (topics) => selectedTopics = topics,
+      topics: const {
+        BlogTopics.entertainment,
+        BlogTopics.business,
+        BlogTopics.technology,
+        BlogTopics.programming,
+      },
     );
   }
 
@@ -120,7 +124,7 @@ class _AddNewBlogPageState extends State<AddNewBlogPage>
     return BlogEditField(
       hintText: LocalKeys.pagesAddNewBlogInputsTitleLabel.local,
       controller: titleController,
-      validator: null,
+      validator: titleValidator,
     );
   }
 
@@ -128,7 +132,7 @@ class _AddNewBlogPageState extends State<AddNewBlogPage>
     return BlogEditField(
       hintText: LocalKeys.pagesAddNewBlogInputsContentLabel.local,
       controller: contentController,
-      validator: null,
+      validator: contentValidator,
       maxLines: null,
     );
   }

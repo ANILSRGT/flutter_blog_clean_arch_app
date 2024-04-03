@@ -1,16 +1,15 @@
-import 'package:flutter_blog_clean_arch_app/core/common/entities/user_entity.dart';
+import 'package:flutter_blog_clean_arch_app/core/common/entities/user/user_entity.dart';
 
 class UserModel extends UserEntity {
   const UserModel({
-    required super.name,
-    required super.email,
+    super.id,
+    super.name,
+    super.email,
   });
 
   factory UserModel.fromEntity(UserEntity entity) => UserModel(
+        id: entity.id,
         name: entity.name,
         email: entity.email,
       );
-
-  @override
-  List<Object?> get props => [name, email];
 }
