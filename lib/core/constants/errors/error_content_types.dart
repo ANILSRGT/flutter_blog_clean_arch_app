@@ -1,5 +1,6 @@
 enum ErrorContentTypes {
   auth(codeCharacter: 'AU'),
+  blog(codeCharacter: 'BL'),
   utils(codeCharacter: 'UT');
 
   const ErrorContentTypes({

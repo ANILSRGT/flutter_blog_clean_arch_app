@@ -1,7 +1,7 @@
-part of 'auth_page_cubit.dart';
+part of 'auth_cubit.dart';
 
-final class AuthPageState with EquatableMixin {
-  const AuthPageState({
+final class AuthState with EquatableMixin {
+  const AuthState({
     required this.isSignInState,
   });
 
@@ -10,11 +10,10 @@ final class AuthPageState with EquatableMixin {
   @override
   List<Object?> get props => [isSignInState];
 
-  AuthPageState copyWith({
+  AuthState copyWith({
     bool? isSignInState,
-    UserEntity? currentUser,
   }) {
-    return AuthPageState(
+    return AuthState(
       isSignInState: isSignInState ?? this.isSignInState,
     );
   }

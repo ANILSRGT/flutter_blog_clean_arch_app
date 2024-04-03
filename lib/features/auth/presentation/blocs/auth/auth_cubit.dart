@@ -3,22 +3,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_blog_clean_arch_app/core/base/models/response_model.dart';
 import 'package:flutter_blog_clean_arch_app/core/common/blocs/app/app_cubit.dart';
 import 'package:flutter_blog_clean_arch_app/core/common/blocs/app_user/app_user_cubit.dart';
+import 'package:flutter_blog_clean_arch_app/core/common/entities/entity_with_id.dart';
 import 'package:flutter_blog_clean_arch_app/core/common/entities/user_entity.dart';
 import 'package:flutter_blog_clean_arch_app/features/auth/domain/usecases/auth_current_user_usecase.dart';
 import 'package:flutter_blog_clean_arch_app/features/auth/domain/usecases/auth_sign_in_usecase.dart';
 import 'package:flutter_blog_clean_arch_app/features/auth/domain/usecases/auth_sign_up_usecase.dart';
 import 'package:flutter_blog_clean_arch_app/injection.dart';
 
-part 'auth_page_state.dart';
+part 'auth_state.dart';
 
-class AuthPageCubit extends Cubit<AuthPageState> {
-  AuthPageCubit({
+class AuthCubit extends Cubit<AuthState> {
+  AuthCubit({
     required AppCubit appCubit,
     required AppUserCubit appUserCubit,
   })  : _appCubit = appCubit,
         _appUserCubit = appUserCubit,
         super(
-          const AuthPageState(
+          const AuthState(
             isSignInState: true,
           ),
         );
@@ -29,7 +30,7 @@ class AuthPageCubit extends Cubit<AuthPageState> {
     emit(state.copyWith(isSignInState: !state.isSignInState));
   }
 
-  Future<ResponseModel<UserEntity>> signIn({
+  Future<ResponseModel<EntityWithId<UserEntity>>> signIn({
     required String email,
     required String password,
   }) async {
@@ -47,7 +48,7 @@ class AuthPageCubit extends Cubit<AuthPageState> {
     return res;
   }
 
-  Future<ResponseModel<UserEntity>> signUp({
+  Future<ResponseModel<EntityWithId<UserEntity>>> signUp({
     required String name,
     required String email,
     required String password,

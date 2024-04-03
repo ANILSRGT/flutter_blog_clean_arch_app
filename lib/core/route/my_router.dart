@@ -10,7 +10,7 @@ import 'package:flutter_blog_clean_arch_app/core/common/widgets/loader/loader_wi
 import 'package:flutter_blog_clean_arch_app/core/constants/route/route_guards.dart';
 import 'package:flutter_blog_clean_arch_app/core/constants/route/route_keys.dart';
 import 'package:flutter_blog_clean_arch_app/core/route/irouternav.dart';
-import 'package:flutter_blog_clean_arch_app/features/auth/presentation/blocs/auth_page/auth_page_cubit.dart';
+import 'package:flutter_blog_clean_arch_app/features/auth/presentation/blocs/auth/auth_cubit.dart';
 
 part 'routernavs/adaptive_routernav.dart';
 
@@ -45,7 +45,7 @@ final class MyRouter {
 
   Widget _generateRouteWidget(BuildContext context, String? path) {
     if (_firstTime) {
-      context.read<AuthPageCubit>().checkUser;
+      context.read<AuthCubit>().checkUser;
       _firstTime = false;
     }
     final pageKey = RouteKeys.getPageKey(path);

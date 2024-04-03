@@ -6,8 +6,8 @@ mixin AuthPageMixin on State<AuthPage> {
   final passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
-  AuthPageCubit readAuthPageBloc() => context.read<AuthPageCubit>();
-  AuthPageCubit watchAuthPageBloc() => context.watch<AuthPageCubit>();
+  AuthCubit readAuthBloc() => context.read<AuthCubit>();
+  AuthCubit watchAuthBloc() => context.watch<AuthCubit>();
   AppCubit watchAppBloc() => context.watch<AppCubit>();
 
   @override
@@ -81,14 +81,14 @@ mixin AuthPageMixin on State<AuthPage> {
     final isValidate = formKey.currentState?.validate() ?? false;
     if (!isValidate) return;
 
-    final isSignIn = readAuthPageBloc().state.isSignInState;
+    final isSignIn = readAuthBloc().state.isSignInState;
 
     final res = await (isSignIn
-        ? readAuthPageBloc().signIn(
+        ? readAuthBloc().signIn(
             email: emailController.text.trim(),
             password: passwordController.text.trim(),
           )
-        : readAuthPageBloc().signUp(
+        : readAuthBloc().signUp(
             name: nameController.text.trim(),
             email: emailController.text.trim(),
             password: passwordController.text.trim(),

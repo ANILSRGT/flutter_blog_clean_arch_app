@@ -5,7 +5,7 @@ import 'package:flutter_blog_clean_arch_app/core/common/widgets/toast/custom_toa
 import 'package:flutter_blog_clean_arch_app/core/constants/localization/local_keys.g.dart';
 import 'package:flutter_blog_clean_arch_app/core/extensions/string_extensions.dart';
 import 'package:flutter_blog_clean_arch_app/core/theme/app_pallete.dart';
-import 'package:flutter_blog_clean_arch_app/features/auth/presentation/blocs/auth_page/auth_page_cubit.dart';
+import 'package:flutter_blog_clean_arch_app/features/auth/presentation/blocs/auth/auth_cubit.dart';
 import 'package:flutter_blog_clean_arch_app/features/auth/presentation/widgets/auth_field.dart';
 import 'package:flutter_blog_clean_arch_app/features/auth/presentation/widgets/auth_gradient_button.dart';
 
@@ -38,7 +38,7 @@ class _AuthPageState extends State<AuthPage> with AuthPageMixin {
   }
 
   Form _buildForm() {
-    final isSignInState = watchAuthPageBloc().state.isSignInState;
+    final isSignInState = watchAuthBloc().state.isSignInState;
     return Form(
       key: formKey,
       child: Column(
@@ -64,7 +64,7 @@ class _AuthPageState extends State<AuthPage> with AuthPageMixin {
   }
 
   Text _authTitle() {
-    final isSignInState = watchAuthPageBloc().state.isSignInState;
+    final isSignInState = watchAuthBloc().state.isSignInState;
     return Text(
       isSignInState
           ? LocalKeys.pagesAuthSignIn.local
@@ -109,7 +109,7 @@ class _AuthPageState extends State<AuthPage> with AuthPageMixin {
   }
 
   AuthGradientButton _authButton() {
-    final isSignInState = watchAuthPageBloc().state.isSignInState;
+    final isSignInState = watchAuthBloc().state.isSignInState;
     final isBusy = watchAppBloc().state.isBusy;
     return AuthGradientButton(
       onPressed: _onAuthButton,
@@ -121,10 +121,10 @@ class _AuthPageState extends State<AuthPage> with AuthPageMixin {
   }
 
   GestureDetector _haveAccountText() {
-    final isSignInState = watchAuthPageBloc().state.isSignInState;
+    final isSignInState = watchAuthBloc().state.isSignInState;
     final isBusy = watchAppBloc().state.isBusy;
     return GestureDetector(
-      onTap: isBusy ? null : readAuthPageBloc().toggleAuthState,
+      onTap: isBusy ? null : readAuthBloc().toggleAuthState,
       child: RichText(
         textAlign: TextAlign.center,
         text: TextSpan(
