@@ -13,14 +13,13 @@ part 'blog_state.dart';
 class BlogCubit extends Cubit<BlogState> {
   BlogCubit() : super(const BlogStateInitial());
 
-  Future<void> createBlog({
+  Future<ResponseModel<BlogEntity>> createBlog({
     required Uint8List image,
     required String title,
     required String content,
     required String ownerUserId,
     required List<String> topics,
   }) async {
-    emit(const BlogStateLoading());
     final res = await Injection.instance.read<BlogUploadUseCase>().execute(
           BlogUploadUseCaseParams(
             image: image,
@@ -30,10 +29,11 @@ class BlogCubit extends Cubit<BlogState> {
             topics: topics,
           ),
         );
-    emit(BlogStateDone(blog: res));
+    emit(BlogState(blog: res));
+    return res;
   }
 
-  Future<void> updateBlog({
+  Future<ResponseModel<BlogEntity>> updateBlog({
     required String blogId,
     required Uint8List image,
     required String title,
@@ -41,7 +41,6 @@ class BlogCubit extends Cubit<BlogState> {
     required String ownerUserId,
     required List<String> topics,
   }) async {
-    emit(const BlogStateLoading());
     final res = await Injection.instance.read<BlogUpdateUseCase>().execute(
           BlogUpdateUseCaseParams(
             blogId: blogId,
@@ -52,6 +51,7 @@ class BlogCubit extends Cubit<BlogState> {
             topics: topics,
           ),
         );
-    emit(BlogStateDone(blog: res));
+    emit(BlogState(blog: res));
+    return res;
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blog_clean_arch_app/core/common/widgets/container/app_container.dart';
 import 'package:flutter_blog_clean_arch_app/core/common/widgets/image/image_aspect_container.dart';
-import 'package:flutter_blog_clean_arch_app/core/constants/data/blog_topics.dart';
 import 'package:flutter_blog_clean_arch_app/core/constants/localization/local_keys.g.dart';
 import 'package:flutter_blog_clean_arch_app/core/extensions/context_extensions.dart';
 import 'package:flutter_blog_clean_arch_app/core/extensions/string_extensions.dart';
@@ -27,8 +26,12 @@ class _AddNewBlogPageState extends State<AddNewBlogPage>
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: onSaveBlog,
-            icon: const Icon(Icons.save_rounded),
+            onPressed: watchAppCubit.state.isBusy ? null : onSaveBlog,
+            icon: Icon(
+              watchAppCubit.state.isBusy
+                  ? Icons.cached_rounded
+                  : Icons.save_rounded,
+            ),
           ),
         ],
       ),
@@ -108,15 +111,8 @@ class _AddNewBlogPageState extends State<AddNewBlogPage>
   }
 
   TopicList _topicsList() {
-    // TODO: Remove dummy data and implement real data
     return TopicList(
       onChanged: (topics) => selectedTopics = topics,
-      topics: const {
-        BlogTopics.entertainment,
-        BlogTopics.business,
-        BlogTopics.technology,
-        BlogTopics.programming,
-      },
     );
   }
 

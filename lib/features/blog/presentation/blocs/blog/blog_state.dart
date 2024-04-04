@@ -1,27 +1,24 @@
 part of 'blog_cubit.dart';
 
-sealed class BlogState with EquatableMixin {
-  const BlogState();
+final class BlogState with EquatableMixin {
+  const BlogState({
+    this.blog,
+  });
+
+  final ResponseModel<BlogEntity>? blog;
 
   @override
   List<Object?> get props => [];
+
+  BlogState copyWith({
+    ResponseModel<BlogEntity>? blog,
+  }) {
+    return BlogState(
+      blog: blog ?? this.blog,
+    );
+  }
 }
 
 final class BlogStateInitial extends BlogState {
   const BlogStateInitial();
-}
-
-final class BlogStateLoading extends BlogState {
-  const BlogStateLoading();
-}
-
-final class BlogStateDone extends BlogState {
-  const BlogStateDone({
-    required this.blog,
-  });
-
-  final ResponseModel<BlogEntity> blog;
-
-  @override
-  List<Object?> get props => [blog];
 }

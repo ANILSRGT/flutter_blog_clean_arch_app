@@ -5,12 +5,10 @@ import 'package:flutter_blog_clean_arch_app/features/blog/presentation/widgets/t
 
 class TopicList extends StatefulWidget {
   const TopicList({
-    required this.topics,
     required this.onChanged,
     super.key,
   });
 
-  final Set<BlogTopics> topics;
   final void Function(Set<BlogTopics> selectedTopics)? onChanged;
 
   @override
@@ -22,6 +20,8 @@ class _TopicListState extends State<TopicList> {
   late final ScrollController _scrollController;
   ValueNotifier<bool> isVisibleLeftScrollBtn = ValueNotifier(false);
   ValueNotifier<bool> isVisibleRightScrollBtn = ValueNotifier(true);
+
+  Set<BlogTopics> get _topics => BlogTopics.values.toSet();
 
   @override
   void initState() {
@@ -54,10 +54,10 @@ class _TopicListState extends State<TopicList> {
             child: Row(
               children: [
                 ...List.generate(
-                  widget.topics.length + widget.topics.length - 1,
+                  _topics.length + _topics.length - 1,
                   (index) {
                     if (index.isEven) {
-                      return _topicChip(widget.topics.elementAt(index ~/ 2));
+                      return _topicChip(_topics.elementAt(index ~/ 2));
                     } else {
                       return const SizedBox(width: 10);
                     }
