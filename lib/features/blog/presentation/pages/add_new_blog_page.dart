@@ -51,6 +51,7 @@ class _AddNewBlogPageState extends State<AddNewBlogPage>
   Form _buildForm() {
     return Form(
       key: formKey,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,

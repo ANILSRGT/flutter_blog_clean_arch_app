@@ -33,6 +33,7 @@ final class AuthInject implements IInject {
       // Blocs
       ..registerLazySingleton(
         () => AuthCubit(
+          appCubit: sl(),
           appUserCubit: sl(),
         ),
       );

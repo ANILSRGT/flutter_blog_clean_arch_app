@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_blog_clean_arch_app/core/base/models/response_model.dart';
+import 'package:flutter_blog_clean_arch_app/core/common/blocs/app/app_cubit.dart';
 import 'package:flutter_blog_clean_arch_app/core/common/blocs/app_user/app_user_cubit.dart';
 import 'package:flutter_blog_clean_arch_app/core/common/entities/user/user_entity.dart';
 import 'package:flutter_blog_clean_arch_app/features/auth/domain/usecases/auth_current_user_usecase.dart';
@@ -12,11 +13,14 @@ part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit({
+    required AppCubit appCubit,
     required AppUserCubit appUserCubit,
   })  : _appUserCubit = appUserCubit,
+        _appCubit = appCubit,
         super(const AuthStateInitial());
 
   final AppUserCubit _appUserCubit;
+  final AppCubit _appCubit;
 
   void toggleAuthState() {
     emit(state.copyWith(isSignInState: !state.isSignInState));
@@ -62,11 +66,13 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> get checkUser async {
+    _appCubit.setBusy(true);
     final res =
         await Injection.instance.read<AuthCurrentUserUseCase>().execute();
     if (res.isSuccess) {
       _appUserCubit.updateUser(res.asSuccess.data);
     }
     if (res.isFail) _appUserCubit.updateUser(null);
+    _appCubit.setBusy(false);
   }
 }

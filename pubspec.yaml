@@ -19,12 +19,12 @@ dependencies:
 
   # Serialization
   equatable: ^2.0.5
-  json_annotation: ^4.8.1
 
   # Dependency Injection
   get_it: ^7.6.7
 
   # Network
+  http: ^1.2.1
   supabase_flutter: ^2.3.4
 
   # Security
@@ -35,13 +35,13 @@ dependencies:
 
   # Utils
   image_picker: ^1.0.7
+  uuid: ^4.3.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   very_good_analysis: ^5.1.0
   build_runner: ^2.4.8
-  json_serializable: ^6.7.1
 
 flutter:
   uses-material-design: true

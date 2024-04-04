@@ -19,9 +19,6 @@ sealed class ResponseModel<T> {
 
   /// cast to [ResponseModelFail]
   ResponseModelFail<T> get asFail => this as ResponseModelFail<T>;
-
-  /// cast to [ResponseModel]
-  ResponseModel<X> castTo<X>() => this as ResponseModel<X>;
 }
 
 /// Response model success (positive)
@@ -40,15 +37,15 @@ class ResponseModelFail<T> extends ResponseModel<T> {
   /// Response model fail constructor
   const ResponseModelFail({
     required this.message,
-    this.throwMessage,
-    this.code,
+    required this.throwMessage,
+    required this.code,
   });
 
   /// Error code
-  final String? code;
+  final String code;
 
-  /// Error message for throw
-  final String? throwMessage;
+  /// Error message for throw (developer message)
+  final String throwMessage;
 
   /// Message for fail response
   final String message;
@@ -61,5 +58,15 @@ extension ResponseModelFailExtension<T> on ResponseModelFail<T> {
   ResponseModelFail<X> convertTo<X>() => ResponseModelFail<X>(
         code: code,
         message: message,
+        throwMessage: throwMessage,
+      );
+}
+
+/// Extension for [ResponseModelSuccess]
+extension ResponseModelSuccessExtension<T> on ResponseModelSuccess<T> {
+  /// cast to [ResponseModelSuccess]
+  /// <br/>Example: `response.asSuccess.castTo<YourType>()`
+  ResponseModelSuccess<X> convertTo<X>() => ResponseModelSuccess<X>(
+        data: data as X,
       );
 }

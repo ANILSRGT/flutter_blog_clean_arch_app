@@ -1,9 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:json_annotation/json_annotation.dart';
 
-part 'user_entity.g.dart';
-
-@JsonSerializable()
 class UserEntity with EquatableMixin {
   const UserEntity({
     this.id,
@@ -11,15 +7,24 @@ class UserEntity with EquatableMixin {
     this.email,
   });
 
-  factory UserEntity.fromJson(Map<String, dynamic> json) =>
-      _$UserEntityFromJson(json);
-  Map<String, dynamic> toJson() => _$UserEntityToJson(this);
+  factory UserEntity.fromJson(Map<String, dynamic> json) {
+    return UserEntity(
+      id: json['id'] as String?,
+      name: json['name'] as String?,
+      email: json['email'] as String?,
+    );
+  }
 
-  @JsonKey(required: true)
+  Map<String, dynamic> toJson(UserEntity instance) {
+    return <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'email': instance.email,
+    };
+  }
+
   final String? id;
-  @JsonKey(required: true)
   final String? name;
-  @JsonKey(required: true)
   final String? email;
 
   @override

@@ -29,7 +29,7 @@ final class _DefaultRouterNav implements IRouterNav {
   }) {
     return navigatorKey.currentState!.pushNamedAndRemoveUntil<T>(
       routeKey.path,
-      (route) => route.isFirst,
+      (route) => false,
       arguments: arguments,
     );
   }

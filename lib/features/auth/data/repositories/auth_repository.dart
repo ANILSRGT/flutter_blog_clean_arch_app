@@ -1,6 +1,6 @@
 import 'package:flutter_blog_clean_arch_app/core/base/models/response_model.dart';
+import 'package:flutter_blog_clean_arch_app/core/common/entities/user/user_entity.dart';
 import 'package:flutter_blog_clean_arch_app/features/auth/data/data_sources/iauth_remote_data_source.dart';
-import 'package:flutter_blog_clean_arch_app/features/auth/data/models/user_model.dart';
 import 'package:flutter_blog_clean_arch_app/features/auth/domain/repositories/iauth_repository.dart';
 
 class AuthRepository implements IAuthRepository {
@@ -11,12 +11,12 @@ class AuthRepository implements IAuthRepository {
   final IAuthRemoteDataSource remoteDataSource;
 
   @override
-  Future<ResponseModel<UserModel>> get currentUser async {
+  Future<ResponseModel<UserEntity>> get currentUser async {
     return remoteDataSource.currentUser;
   }
 
   @override
-  Future<ResponseModel<UserModel>> signInWithEmailPassword({
+  Future<ResponseModel<UserEntity>> signInWithEmailPassword({
     required String email,
     required String password,
   }) async {
@@ -27,7 +27,7 @@ class AuthRepository implements IAuthRepository {
   }
 
   @override
-  Future<ResponseModel<UserModel>> signUpWithEmailPassword({
+  Future<ResponseModel<UserEntity>> signUpWithEmailPassword({
     required String name,
     required String email,
     required String password,

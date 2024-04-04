@@ -20,6 +20,10 @@ final class AppTheme {
       contentPadding: const EdgeInsets.all(27),
       enabledBorder: _border(),
       focusedBorder: _border(color: AppPallete.gradient2),
+      errorBorder: _border(color: AppPallete.error),
+      border: _border(),
+      focusedErrorBorder: _border(color: AppPallete.error),
+      disabledBorder: _border(color: AppPallete.grey),
     ),
     chipTheme: const ChipThemeData(
       color: MaterialStatePropertyAll(

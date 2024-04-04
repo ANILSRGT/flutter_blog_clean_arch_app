@@ -41,6 +41,7 @@ class _AuthPageState extends State<AuthPage> with AuthPageMixin {
     final isSignInState = watchAuthBloc().state.isSignInState;
     return Form(
       key: formKey,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,

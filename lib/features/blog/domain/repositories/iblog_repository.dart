@@ -26,4 +26,7 @@ abstract interface class IBlogRepository {
     String? ownerUserId,
     List<String>? topics,
   });
+
+  /// Returns all blogs from the blogs table.
+  Future<ResponseModel<List<BlogEntity>>> getAllBlogs();
 }

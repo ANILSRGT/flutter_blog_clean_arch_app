@@ -4,7 +4,6 @@ import 'package:flutter_blog_clean_arch_app/core/constants/errors/error_content_
 import 'package:flutter_blog_clean_arch_app/core/constants/errors/types/auth/auth_error_codes.dart';
 import 'package:flutter_blog_clean_arch_app/core/extensions/collection_extensions.dart';
 import 'package:flutter_blog_clean_arch_app/features/auth/data/data_sources/iauth_remote_data_source.dart';
-import 'package:flutter_blog_clean_arch_app/features/auth/data/models/user_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthRemoteDataSource extends IAuthRemoteDataSource {
@@ -16,12 +15,13 @@ class AuthRemoteDataSource extends IAuthRemoteDataSource {
   Session? get _userSession => _supabaseClient.auth.currentSession;
 
   @override
-  Future<ResponseModel<UserModel>> get currentUser async {
+  Future<ResponseModel<UserEntity>> get currentUser async {
     try {
       if (_userSession == null) {
-        return serverErrorToResponseFail<UserModel>(
+        return serverErrorToResponseFail<UserEntity>(
           code: AuthErrorCodes.getCurrentUser,
           contentType: ErrorContentTypes.auth,
+          throwMessage: 'User session is null',
         );
       }
 
@@ -38,19 +38,20 @@ class AuthRemoteDataSource extends IAuthRemoteDataSource {
         'email': _userSession!.user.email,
       });
 
-      final user = UserModel.fromEntity(UserEntity.fromJson(userData));
+      final user = UserEntity.fromJson(userData);
 
       return ResponseModelSuccess(data: user);
     } catch (e) {
-      return serverErrorToResponseFail<UserModel>(
+      return serverErrorToResponseFail<UserEntity>(
         code: AuthErrorCodes.getCurrentUser,
         contentType: ErrorContentTypes.auth,
+        throwMessage: e.toString(),
       );
     }
   }
 
   @override
-  Future<ResponseModel<UserModel>> signInWithEmailPassword({
+  Future<ResponseModel<UserEntity>> signInWithEmailPassword({
     required String email,
     required String password,
   }) async {
@@ -61,9 +62,10 @@ class AuthRemoteDataSource extends IAuthRemoteDataSource {
       );
 
       if (res.user == null) {
-        return serverErrorToResponseFail<UserModel>(
+        return serverErrorToResponseFail<UserEntity>(
           code: AuthErrorCodes.signInUserNotFound,
           contentType: ErrorContentTypes.auth,
+          throwMessage: 'User is null',
         );
       }
 
@@ -71,15 +73,16 @@ class AuthRemoteDataSource extends IAuthRemoteDataSource {
 
       return ResponseModelSuccess(data: current.asSuccess.data);
     } catch (e) {
-      return serverErrorToResponseFail<UserModel>(
+      return serverErrorToResponseFail<UserEntity>(
         code: AuthErrorCodes.signIn,
         contentType: ErrorContentTypes.auth,
+        throwMessage: e.toString(),
       );
     }
   }
 
   @override
-  Future<ResponseModel<UserModel>> signUpWithEmailPassword({
+  Future<ResponseModel<UserEntity>> signUpWithEmailPassword({
     required String name,
     required String email,
     required String password,
@@ -92,9 +95,10 @@ class AuthRemoteDataSource extends IAuthRemoteDataSource {
       );
 
       if (existUser != null) {
-        return serverErrorToResponseFail<UserModel>(
+        return serverErrorToResponseFail<UserEntity>(
           code: AuthErrorCodes.signUpUserExist,
           contentType: ErrorContentTypes.auth,
+          throwMessage: 'User already exist',
         );
       }
 
@@ -107,22 +111,24 @@ class AuthRemoteDataSource extends IAuthRemoteDataSource {
       );
 
       if (res.user == null) {
-        return serverErrorToResponseFail<UserModel>(
+        return serverErrorToResponseFail<UserEntity>(
           code: AuthErrorCodes.signUpUserInvalid,
           contentType: ErrorContentTypes.auth,
+          throwMessage: 'User is null',
         );
       }
 
-      final user = UserModel(
+      final user = UserEntity(
         name: name,
         email: email,
       );
 
       return ResponseModelSuccess(data: user);
     } catch (e) {
-      return serverErrorToResponseFail<UserModel>(
+      return serverErrorToResponseFail<UserEntity>(
         code: AuthErrorCodes.signUp,
         contentType: ErrorContentTypes.auth,
+        throwMessage: e.toString(),
       );
     }
   }

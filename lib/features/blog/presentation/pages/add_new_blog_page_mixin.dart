@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -29,6 +30,7 @@ mixin AddNewBlogPageMixin on State<AddNewBlogPage> {
   void dispose() {
     titleController.dispose();
     contentController.dispose();
+    formKey.currentState?.dispose();
     super.dispose();
   }
 
@@ -43,6 +45,7 @@ mixin AddNewBlogPageMixin on State<AddNewBlogPage> {
     if (value.isEmptyOrNull) {
       return 'Content is required';
     }
+    log('Content is required');
     return null;
   }
 
@@ -110,7 +113,7 @@ mixin AddNewBlogPageMixin on State<AddNewBlogPage> {
 
     if (res.isFail && mounted) {
       CustomToast.show(
-        message: res.asFail.message,
+        message: res.asFail.throwMessage,
         context: context,
       );
 
@@ -118,6 +121,7 @@ mixin AddNewBlogPageMixin on State<AddNewBlogPage> {
       return;
     }
 
+    _readAppCubit.setBusy(false);
     await MyRouter.instance.routerNav.pushAndRemoveAll(RouteKeys.blog);
   }
 }

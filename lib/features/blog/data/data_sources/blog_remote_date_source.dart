@@ -4,8 +4,8 @@ import 'package:flutter_blog_clean_arch_app/core/base/models/response_model.dart
 import 'package:flutter_blog_clean_arch_app/core/common/entities/blog/blog_entity.dart';
 import 'package:flutter_blog_clean_arch_app/core/constants/errors/error_content_types.dart';
 import 'package:flutter_blog_clean_arch_app/core/constants/errors/types/blog/blog_error_codes.dart';
+import 'package:flutter_blog_clean_arch_app/core/utils/id_generate.dart';
 import 'package:flutter_blog_clean_arch_app/features/blog/data/data_sources/iblog_remote_data_source.dart';
-import 'package:flutter_blog_clean_arch_app/features/blog/data/models/blog_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class BlogRemoteDataSource extends IBlogRemoteDataSource {
@@ -16,7 +16,7 @@ class BlogRemoteDataSource extends IBlogRemoteDataSource {
 
   SupabaseQueryBuilder get _blogTable => _supabaseClient.from('blogs');
   StorageFileApi get _blogImagesStorage =>
-      _supabaseClient.storage.from('blog-images');
+      _supabaseClient.storage.from('blog_images');
 
   Future<ResponseModel<String>> _uploadBlogImage({
     required Uint8List image,
@@ -32,12 +32,13 @@ class BlogRemoteDataSource extends IBlogRemoteDataSource {
       return serverErrorToResponseFail<String>(
         code: BlogErrorCodes.uploadBlogImage,
         contentType: ErrorContentTypes.blog,
+        throwMessage: e.toString(),
       );
     }
   }
 
   @override
-  Future<ResponseModel<BlogModel>> uploadBlog({
+  Future<ResponseModel<BlogEntity>> uploadBlog({
     required Uint8List image,
     required String title,
     required String content,
@@ -46,6 +47,7 @@ class BlogRemoteDataSource extends IBlogRemoteDataSource {
   }) async {
     try {
       final blog = BlogEntity(
+        id: IdGenerate.generateUUIDV4(),
         ownerUserId: ownerUserId,
         title: title,
         content: content,
@@ -53,32 +55,46 @@ class BlogRemoteDataSource extends IBlogRemoteDataSource {
         updatedAt: DateTime.now().toUtc(),
       );
 
-      final blogData = await _blogTable.insert(blog.toJson()).single();
+      final blogData = await _blogTable.insert(blog.toJson).select();
 
-      final blogEntity = BlogEntity.fromJson(blogData);
+      final blogEntity = BlogEntity.fromJson(blogData.first);
 
       final blogImageRes = await _uploadBlogImage(
         image: image,
         blogId: blogEntity.id!,
       );
 
-      if (blogImageRes.isFail) return blogImageRes.castTo();
+      if (blogImageRes.isFail) return blogImageRes.asFail.convertTo();
 
-      final blogModel = BlogModel.fromEntity(
-        blogEntity.copyWith(imageUrl: blogImageRes.asSuccess.data),
+      final updatedModel = blogEntity.copyWith(
+        imageUrl: blogImageRes.asSuccess.data,
       );
 
-      return ResponseModelSuccess(data: blogModel);
+      final updatedBlogData = await _blogTable
+          .update(updatedModel.toJson)
+          .eq('id', updatedModel.id!)
+          .select();
+
+      if (updatedBlogData.isEmpty) {
+        return serverErrorToResponseFail<BlogEntity>(
+          code: BlogErrorCodes.uploadBlogImageByUploadBlog,
+          contentType: ErrorContentTypes.blog,
+          throwMessage: 'Blog image upload failed by blog creation',
+        );
+      }
+
+      return ResponseModelSuccess(data: updatedModel);
     } catch (e) {
-      return serverErrorToResponseFail<BlogModel>(
+      return serverErrorToResponseFail<BlogEntity>(
         code: BlogErrorCodes.uploadBlog,
         contentType: ErrorContentTypes.blog,
+        throwMessage: e.toString(),
       );
     }
   }
 
   @override
-  Future<ResponseModel<BlogModel>> updateBlog({
+  Future<ResponseModel<BlogEntity>> updateBlog({
     required String blogId,
     Uint8List? image,
     String? title,
@@ -93,6 +109,7 @@ class BlogRemoteDataSource extends IBlogRemoteDataSource {
         return serverErrorToResponseFail(
           code: BlogErrorCodes.notFoundBlog,
           contentType: ErrorContentTypes.blog,
+          throwMessage: 'Blog not found',
         );
       }
 
@@ -100,35 +117,60 @@ class BlogRemoteDataSource extends IBlogRemoteDataSource {
       if (image != null) {
         final blogDataImageRes =
             await _uploadBlogImage(blogId: blogId, image: image);
-        if (blogDataImageRes.isFail) return blogDataImageRes.castTo();
+        if (blogDataImageRes.isFail) return blogDataImageRes.asFail.convertTo();
         blogDataImageUrl = blogDataImageRes.asSuccess.data;
       }
 
-      final blogModel = BlogModel.fromEntity(
-        BlogEntity.fromJson(blogData).copyWith(
-          title: title,
-          content: content,
-          imageUrl: blogDataImageUrl,
-          topics: topics,
-          updatedAt: DateTime.now().toUtc(),
-        ),
+      final blogEntity = BlogEntity.fromJson(blogData).copyWith(
+        title: title,
+        content: content,
+        imageUrl: blogDataImageUrl,
+        topics: topics,
+        updatedAt: DateTime.now().toUtc(),
       );
 
       final updatedBlogData =
-          await _blogTable.update(blogModel.toJson()).eq('id', blogId).single();
+          await _blogTable.update(blogEntity.toJson).eq('id', blogId).single();
 
       if (updatedBlogData.isEmpty) {
         return serverErrorToResponseFail(
           code: BlogErrorCodes.notFoundBlog,
           contentType: ErrorContentTypes.blog,
+          throwMessage: 'Blog not found',
         );
       }
 
-      return ResponseModelSuccess(data: blogModel);
+      return ResponseModelSuccess(data: blogEntity);
     } catch (e) {
       return serverErrorToResponseFail(
         code: BlogErrorCodes.updateBlog,
         contentType: ErrorContentTypes.blog,
+        throwMessage: e.toString(),
+      );
+    }
+  }
+
+  @override
+  Future<ResponseModel<List<BlogEntity>>> getAllBlogs() async {
+    try {
+      final blogData = await _blogTable.select('*, profiles (name)');
+
+      final blogEntities = blogData
+          .map(
+            (blog) => BlogEntity.fromJson(blog).copyWith(
+              resParams: BlogEntityResParams(
+                ownerName: (blog['profiles'] as Map<String, String>)['name'],
+              ),
+            ),
+          )
+          .toList();
+
+      return ResponseModelSuccess(data: blogEntities);
+    } catch (e) {
+      return serverErrorToResponseFail(
+        code: BlogErrorCodes.getAllBlogs,
+        contentType: ErrorContentTypes.blog,
+        throwMessage: e.toString(),
       );
     }
   }
