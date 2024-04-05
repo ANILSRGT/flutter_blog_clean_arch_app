@@ -20,15 +20,13 @@ class BlogRepository implements IBlogRepository {
     required String ownerUserId,
     required List<String> topics,
   }) async {
-    final blogData = await _remoteDataSource.uploadBlog(
+    return _remoteDataSource.uploadBlog(
       image: image,
       title: title,
       content: content,
       ownerUserId: ownerUserId,
       topics: topics,
     );
-
-    return blogData;
   }
 
   @override
@@ -39,8 +37,8 @@ class BlogRepository implements IBlogRepository {
     String? content,
     String? ownerUserId,
     List<String>? topics,
-  }) {
-    final blogData = _remoteDataSource.updateBlog(
+  }) async {
+    return _remoteDataSource.updateBlog(
       blogId: blogId,
       image: image,
       title: title,
@@ -48,14 +46,10 @@ class BlogRepository implements IBlogRepository {
       ownerUserId: ownerUserId,
       topics: topics,
     );
-
-    return blogData;
   }
 
   @override
-  Future<ResponseModel<List<BlogEntity>>> getAllBlogs() {
-    final blogData = _remoteDataSource.getAllBlogs();
-
-    return blogData;
+  Future<ResponseModel<List<BlogEntity>>> getAllBlogs() async {
+    return _remoteDataSource.getAllBlogs();
   }
 }

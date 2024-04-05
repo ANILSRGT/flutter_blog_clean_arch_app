@@ -7,4 +7,8 @@ enum BlogTopics {
   const BlogTopics({required this.value});
 
   final String value;
+
+  static BlogTopics fromString(String value) {
+    return BlogTopics.values.firstWhere((element) => element.value == value);
+  }
 }

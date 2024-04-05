@@ -56,7 +56,6 @@ class BlogEntity with EquatableMixin {
     String? content,
     String? imageUrl,
     List<String>? topics,
-    DateTime? updatedAt,
     BlogEntityResParams? resParams,
   }) {
     return BlogEntity(
@@ -66,7 +65,7 @@ class BlogEntity with EquatableMixin {
       content: content ?? this.content,
       imageUrl: imageUrl ?? this.imageUrl,
       topics: topics ?? this.topics,
-      updatedAt: updatedAt ?? DateTime.now().toUtc(),
+      updatedAt: (updatedAt ?? DateTime.now()).toLocal(),
       resParams: resParams ?? this.resParams,
     );
   }

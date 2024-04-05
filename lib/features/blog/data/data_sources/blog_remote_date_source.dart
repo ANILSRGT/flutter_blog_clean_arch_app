@@ -126,7 +126,6 @@ class BlogRemoteDataSource extends IBlogRemoteDataSource {
         content: content,
         imageUrl: blogDataImageUrl,
         topics: topics,
-        updatedAt: DateTime.now().toUtc(),
       );
 
       final updatedBlogData =
@@ -155,15 +154,18 @@ class BlogRemoteDataSource extends IBlogRemoteDataSource {
     try {
       final blogData = await _blogTable.select('*, profiles (name)');
 
-      final blogEntities = blogData
-          .map(
-            (blog) => BlogEntity.fromJson(blog).copyWith(
-              resParams: BlogEntityResParams(
-                ownerName: (blog['profiles'] as Map<String, String>)['name'],
-              ),
+      final blogEntities = blogData.map(
+        (blog) {
+          final toEntity = BlogEntity.fromJson(blog);
+          final addResParams = toEntity.copyWith(
+            resParams: BlogEntityResParams(
+              ownerName:
+                  (blog['profiles'] as Map<String, dynamic>)['name'] as String?,
             ),
-          )
-          .toList();
+          );
+          return addResParams;
+        },
+      ).toList();
 
       return ResponseModelSuccess(data: blogEntities);
     } catch (e) {
