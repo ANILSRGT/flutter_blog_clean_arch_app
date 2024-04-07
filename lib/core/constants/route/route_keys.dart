@@ -14,7 +14,6 @@ enum RouteKeys {
   blog(
     path: '/blog',
     page: BlogPage(),
-    guards: {RouteGuards.auth},
   ),
   addNewBlog(
     path: '/blog/add',
@@ -24,7 +23,6 @@ enum RouteKeys {
   blogViewer(
     path: '/blog/viewer',
     page: BlogViewerPage(),
-    guards: {RouteGuards.auth},
   );
 
   const RouteKeys({
