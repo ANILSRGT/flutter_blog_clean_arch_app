@@ -2,6 +2,8 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blog_clean_arch_app/core/common/entities/blog/blog_entity.dart';
 import 'package:flutter_blog_clean_arch_app/core/constants/data/blog_topics.dart';
+import 'package:flutter_blog_clean_arch_app/core/constants/route/route_keys.dart';
+import 'package:flutter_blog_clean_arch_app/core/route/my_router.dart';
 import 'package:flutter_blog_clean_arch_app/core/theme/app_pallete.dart';
 import 'package:flutter_blog_clean_arch_app/core/utils/datetime_ago_calculator.dart';
 import 'package:flutter_blog_clean_arch_app/core/utils/separated_list_generate.dart';
@@ -22,27 +24,34 @@ class BlogCard extends StatefulWidget {
 }
 
 class _BlogCardState extends State<BlogCard> {
+  void _onTapCard() {
+    MyRouter.instance.routerNav.push(RouteKeys.blogViewer);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 200,
-      constraints: const BoxConstraints(minHeight: 100),
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        color: widget.bgColor,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          _buildTopics(),
-          const SizedBox(height: 8),
-          _buildTitle(),
-          const SizedBox(height: 8),
-          _buildContent(),
-          const SizedBox(height: 24),
-          _buildAgo(),
-        ],
+    return GestureDetector(
+      onTap: _onTapCard,
+      child: Container(
+        width: 200,
+        constraints: const BoxConstraints(minHeight: 100),
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: widget.bgColor,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _buildTopics(),
+            const SizedBox(height: 8),
+            _buildTitle(),
+            const SizedBox(height: 8),
+            _buildContent(),
+            const SizedBox(height: 24),
+            _buildAgo(),
+          ],
+        ),
       ),
     );
   }

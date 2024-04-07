@@ -28,10 +28,12 @@ class _AuthPageState extends State<AuthPage> with AuthPageMixin {
 
   Widget _buildBody() {
     return Center(
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(15),
-          child: _buildForm(),
+      child: Scrollbar(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: _buildForm(),
+          ),
         ),
       ),
     );

@@ -14,6 +14,10 @@ class NetworkMemoryImage extends StatefulWidget {
 
   @override
   State<NetworkMemoryImage> createState() => _NetworkMemoryImageState();
+
+  static ImageProvider<Object> fromUrl(String url) {
+    return NetworkImage(url);
+  }
 }
 
 class _NetworkMemoryImageState extends State<NetworkMemoryImage> {

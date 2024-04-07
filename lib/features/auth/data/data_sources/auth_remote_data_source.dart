@@ -2,21 +2,36 @@ import 'package:flutter_blog_clean_arch_app/core/base/models/response_model.dart
 import 'package:flutter_blog_clean_arch_app/core/common/entities/user/user_entity.dart';
 import 'package:flutter_blog_clean_arch_app/core/constants/errors/error_content_types.dart';
 import 'package:flutter_blog_clean_arch_app/core/constants/errors/types/auth/auth_error_codes.dart';
+import 'package:flutter_blog_clean_arch_app/core/constants/errors/types/network/network_error_codes.dart';
 import 'package:flutter_blog_clean_arch_app/core/extensions/collection_extensions.dart';
+import 'package:flutter_blog_clean_arch_app/core/network/internet_connection/iconnection_checker.dart';
 import 'package:flutter_blog_clean_arch_app/features/auth/data/data_sources/iauth_remote_data_source.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthRemoteDataSource extends IAuthRemoteDataSource {
   AuthRemoteDataSource({
     required SupabaseClient supabaseClient,
-  }) : _supabaseClient = supabaseClient;
+    required IConnectionChecker connectionChecker,
+  })  : _supabaseClient = supabaseClient,
+        _connectionChecker = connectionChecker;
+
   final SupabaseClient _supabaseClient;
+  final IConnectionChecker _connectionChecker;
 
   Session? get _userSession => _supabaseClient.auth.currentSession;
 
   @override
   Future<ResponseModel<UserEntity>> get currentUser async {
     try {
+      final hasConnection = await _connectionChecker.hasConnection;
+      if (!hasConnection) {
+        return serverErrorToResponseFail<UserEntity>(
+          code: NetworkErrorCodes.noInternetConnection,
+          contentType: ErrorContentTypes.network,
+          throwMessage: 'No internet connection',
+        );
+      }
+
       if (_userSession == null) {
         return serverErrorToResponseFail<UserEntity>(
           code: AuthErrorCodes.getCurrentUser,

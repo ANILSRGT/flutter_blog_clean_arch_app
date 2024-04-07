@@ -4,6 +4,7 @@ import 'package:flutter_blog_clean_arch_app/core/extensions/collection_extension
 import 'package:flutter_blog_clean_arch_app/features/auth/presentation/pages/auth_page.dart';
 import 'package:flutter_blog_clean_arch_app/features/blog/presentation/pages/add_new_blog_page.dart';
 import 'package:flutter_blog_clean_arch_app/features/blog/presentation/pages/blog_page.dart';
+import 'package:flutter_blog_clean_arch_app/features/blog/presentation/pages/blog_viewer_page.dart';
 
 enum RouteKeys {
   auth(
@@ -18,6 +19,11 @@ enum RouteKeys {
   addNewBlog(
     path: '/blog/add',
     page: AddNewBlogPage(),
+    guards: {RouteGuards.auth},
+  ),
+  blogViewer(
+    path: '/blog/viewer',
+    page: BlogViewerPage(),
     guards: {RouteGuards.auth},
   );
 

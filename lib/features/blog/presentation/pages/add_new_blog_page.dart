@@ -40,10 +40,12 @@ class _AddNewBlogPageState extends State<AddNewBlogPage>
   }
 
   Widget _buildBody() {
-    return SingleChildScrollView(
-      child: AppContainer(
-        padding: const EdgeInsets.all(20),
-        child: _buildForm(),
+    return Scrollbar(
+      child: SingleChildScrollView(
+        child: AppContainer(
+          padding: const EdgeInsets.all(20),
+          child: _buildForm(),
+        ),
       ),
     );
   }
@@ -103,7 +105,7 @@ class _AddNewBlogPageState extends State<AddNewBlogPage>
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
         child: ImageAspectContainer(
-          imageMemory: selectedImage!,
+          image: MemoryImage(selectedImage!),
           dynamicHeight: context.screenHeight * 0.4,
           maxHeight: 150,
         ),

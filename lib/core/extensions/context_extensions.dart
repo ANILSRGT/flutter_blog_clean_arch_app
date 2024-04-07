@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 extension ContextExt on BuildContext {
@@ -13,4 +14,11 @@ extension ContextExt on BuildContext {
   }) {
     return orientation == Orientation.portrait ? portrait : landscape;
   }
+}
+
+/// Easy localization extension
+extension EasyLocaleExt on BuildContext {
+  String get fullLocaleCode => locale.countryCode == null
+      ? locale.languageCode
+      : '${locale.languageCode}_${locale.countryCode}';
 }

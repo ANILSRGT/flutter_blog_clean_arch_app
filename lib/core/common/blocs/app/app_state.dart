@@ -4,6 +4,7 @@ class AppState extends Equatable {
   const AppState({
     this.isBusy = false,
   });
+
   final bool isBusy;
 
   @override

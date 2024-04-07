@@ -26,6 +26,7 @@ dependencies:
   # Network
   http: ^1.2.1
   supabase_flutter: ^2.3.4
+  internet_connection_checker_plus: ^2.3.0
 
   # Security
   flutter_dotenv: ^5.1.0

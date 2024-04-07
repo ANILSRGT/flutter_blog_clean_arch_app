@@ -1,11 +1,10 @@
 import 'dart:math' show min;
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
 class ImageAspectContainer extends StatelessWidget {
   const ImageAspectContainer({
-    required this.imageMemory,
+    required this.image,
     super.key,
     this.fit = BoxFit.cover,
     this.maxHeight,
@@ -16,7 +15,7 @@ class ImageAspectContainer extends StatelessWidget {
               (maxHeight == null && dynamicHeight == null),
           'maxHeight and dynamicHeight must be used together.',
         );
-  final Uint8List imageMemory;
+  final ImageProvider<Object> image;
   final BoxFit fit;
   final double? dynamicHeight;
   final double? maxHeight;
@@ -32,8 +31,8 @@ class ImageAspectContainer extends StatelessWidget {
       height: height,
       child: AspectRatio(
         aspectRatio: aspectRatio,
-        child: Image.memory(
-          imageMemory,
+        child: Image(
+          image: image,
           fit: fit,
           width: double.infinity,
         ),

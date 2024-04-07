@@ -37,14 +37,16 @@ class _BlogPageState extends State<BlogPage> with BlogPageMixin {
   Widget _buildBody() {
     return RefreshIndicator.adaptive(
       onRefresh: refresh,
-      child: SingleChildScrollView(
-        primary: true,
-        padding: const EdgeInsets.all(16),
-        physics: const AlwaysScrollableScrollPhysics(),
-        child: Column(
-          children: [
-            _buildBlogList(),
-          ],
+      child: Scrollbar(
+        child: SingleChildScrollView(
+          primary: true,
+          padding: const EdgeInsets.all(16),
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Column(
+            children: [
+              _buildBlogList(),
+            ],
+          ),
         ),
       ),
     );

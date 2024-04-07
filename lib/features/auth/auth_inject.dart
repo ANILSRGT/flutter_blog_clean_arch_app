@@ -19,7 +19,10 @@ final class AuthInject implements IInject {
     // Data Sources
     sl
       ..registerFactory<IAuthRemoteDataSource>(
-        () => AuthRemoteDataSource(supabaseClient: sl()),
+        () => AuthRemoteDataSource(
+          connectionChecker: sl(),
+          supabaseClient: sl(),
+        ),
       )
       // Repositories
       ..registerFactory<IAuthRepository>(
