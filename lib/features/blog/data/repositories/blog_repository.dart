@@ -2,15 +2,25 @@ import 'dart:typed_data';
 
 import 'package:flutter_blog_clean_arch_app/core/base/models/response_model.dart';
 import 'package:flutter_blog_clean_arch_app/core/common/entities/blog/blog_entity.dart';
+import 'package:flutter_blog_clean_arch_app/core/constants/errors/error_content_types.dart';
+import 'package:flutter_blog_clean_arch_app/core/constants/errors/types/network/network_error_codes.dart';
+import 'package:flutter_blog_clean_arch_app/core/network/internet_connection/iconnection_checker.dart';
+import 'package:flutter_blog_clean_arch_app/features/blog/data/data_sources/iblog_local_data_source.dart';
 import 'package:flutter_blog_clean_arch_app/features/blog/data/data_sources/iblog_remote_data_source.dart';
 import 'package:flutter_blog_clean_arch_app/features/blog/domain/repositories/iblog_repository.dart';
 
 class BlogRepository implements IBlogRepository {
   BlogRepository({
     required IBlogRemoteDataSource remoteDataSource,
-  }) : _remoteDataSource = remoteDataSource;
+    required IBlogLocalDataSource localDataSource,
+    required IConnectionChecker connectionChecker,
+  })  : _remoteDataSource = remoteDataSource,
+        _localDataSource = localDataSource,
+        _connectionChecker = connectionChecker;
 
   final IBlogRemoteDataSource _remoteDataSource;
+  final IBlogLocalDataSource _localDataSource;
+  final IConnectionChecker _connectionChecker;
 
   @override
   Future<ResponseModel<BlogEntity>> uploadBlog({
@@ -20,6 +30,15 @@ class BlogRepository implements IBlogRepository {
     required String ownerUserId,
     required List<String> topics,
   }) async {
+    final isConnected = await _connectionChecker.hasConnection;
+    if (!isConnected) {
+      return _remoteDataSource.serverErrorToResponseFail(
+        code: NetworkErrorCodes.noInternetConnection,
+        contentType: ErrorContentTypes.network,
+        throwMessage: 'No internet connection',
+      );
+    }
+
     return _remoteDataSource.uploadBlog(
       image: image,
       title: title,
@@ -38,6 +57,15 @@ class BlogRepository implements IBlogRepository {
     String? ownerUserId,
     List<String>? topics,
   }) async {
+    final isConnected = await _connectionChecker.hasConnection;
+    if (!isConnected) {
+      return _remoteDataSource.serverErrorToResponseFail(
+        code: NetworkErrorCodes.noInternetConnection,
+        contentType: ErrorContentTypes.network,
+        throwMessage: 'No internet connection',
+      );
+    }
+
     return _remoteDataSource.updateBlog(
       blogId: blogId,
       image: image,
@@ -50,6 +78,17 @@ class BlogRepository implements IBlogRepository {
 
   @override
   Future<ResponseModel<List<BlogEntity>>> getAllBlogs() async {
-    return _remoteDataSource.getAllBlogs();
+    final isConnected = await _connectionChecker.hasConnection;
+    if (!isConnected) {
+      final blogs = _localDataSource.loadBlogs();
+      return ResponseModelSuccess(data: blogs);
+    }
+
+    final blogsRes = await _remoteDataSource.getAllBlogs();
+    if (blogsRes.isSuccess) {
+      _localDataSource.uploadLocalBlogs(blogs: blogsRes.asSuccess.data);
+    }
+
+    return blogsRes;
   }
 }
