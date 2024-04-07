@@ -37,11 +37,11 @@ dependencies:
   # Cache
   hive: ^4.0.0-dev.2
   isar_flutter_libs: ^4.0.0-dev.14
-  path_provider: ^2.1.2
 
   # Utils
   image_picker: ^1.0.7
   uuid: ^4.3.3
+  path_provider: ^2.1.2
 
 dev_dependencies:
   flutter_test:
