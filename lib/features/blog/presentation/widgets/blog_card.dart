@@ -7,6 +7,7 @@ import 'package:flutter_blog_clean_arch_app/core/route/my_router.dart';
 import 'package:flutter_blog_clean_arch_app/core/theme/app_pallete.dart';
 import 'package:flutter_blog_clean_arch_app/core/utils/datetime_ago_calculator.dart';
 import 'package:flutter_blog_clean_arch_app/core/utils/separated_list_generate.dart';
+import 'package:flutter_blog_clean_arch_app/features/blog/presentation/pages/blog_viewer_page_mixin.dart';
 import 'package:flutter_blog_clean_arch_app/features/blog/presentation/widgets/topic_chip.dart';
 
 class BlogCard extends StatefulWidget {
@@ -25,7 +26,11 @@ class BlogCard extends StatefulWidget {
 
 class _BlogCardState extends State<BlogCard> {
   void _onTapCard() {
-    MyRouter.instance.routerNav.push(RouteKeys.blogViewer);
+    final toArgs = BlogViewerPageArgs(blog: widget.blog);
+    MyRouter.instance.routerNav.push(
+      RouteKeys.blogViewer,
+      arguments: toArgs,
+    );
   }
 
   @override

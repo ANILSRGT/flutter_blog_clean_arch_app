@@ -1,5 +1,6 @@
 import 'dart:math' show min;
 
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 
 class ImageAspectContainer extends StatelessWidget {
@@ -35,6 +36,23 @@ class ImageAspectContainer extends StatelessWidget {
           image: image,
           fit: fit,
           width: double.infinity,
+          errorBuilder: (context, error, stackTrace) {
+            return DottedBorder(
+              borderType: BorderType.RRect,
+              strokeWidth: 2,
+              dashPattern: const [4, 4],
+              radius: const Radius.circular(8),
+              color: Theme.of(context).colorScheme.error,
+              child: const Tooltip(
+                message: 'No image found!',
+                triggerMode: TooltipTriggerMode.tap,
+                showDuration: Duration(seconds: 2),
+                child: Center(
+                  child: Icon(Icons.error),
+                ),
+              ),
+            );
+          },
         ),
       ),
     );

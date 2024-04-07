@@ -19,6 +19,17 @@
                 "getCurrentUser": "Kullanıcı bulunamadı!"
             }
         },
+        "blog": {
+            "uploadBlog": "Blog oluşturulurken hata oluştu!",
+            "uploadBlogImageByUploadBlog": "Blog oluşturma aşamasında blog resmi yüklenirken hata oluştu!",
+            "uploadBlogImage": "Blog resmi yüklenirken hata oluştu!",
+            "updateBlog": "Blog güncellenirken hata oluştu!",
+            "notFoundBlog": "Blog bulunamadı!",
+            "getAllBlogs": "Bloglar getirilirken hata oluştu!"
+        },
+        "network": {
+            "noInternetConnection": "İnternet bağlantısı yok!"
+        },
         "unknown": {
             "utils": {
                 "pickImage": "Resim seçerken hata!"
@@ -85,11 +96,25 @@
                     "label": "Resim Seç"
                 },
                 "title": {
-                    "label": "Başlık"
+                    "label": "Başlık",
+                    "placeholder": "Başlık giriniz.",
+                    "validates": {
+                        "required": "Başlık zorunludur!"
+                    }
                 },
                 "content": {
-                    "label": "İçerik"
+                    "label": "İçerik",
+                    "placeholder": "İçerik giriniz.",
+                    "validates": {
+                        "required": "İçerik zorunludur!"
+                    }
                 }
+            },
+            "onSaveValid": {
+                "fillAllFields": "Tüm alanları doldurunuz!",
+                "selectAnTopic": "En az bir konu seçiniz!",
+                "selectImage": "Resim seçiniz!",
+                "userNotFound": "Kullanıcı bulunamadı!"
             }
         }
     }

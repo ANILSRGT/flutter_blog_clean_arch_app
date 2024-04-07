@@ -13,8 +13,8 @@ mixin BlogViewerPageMixin on State<BlogViewerPage> {
   late final BlogViewerPageArgs args;
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     args = ModalRoute.of(context)!.settings.arguments! as BlogViewerPageArgs;
   }
 }

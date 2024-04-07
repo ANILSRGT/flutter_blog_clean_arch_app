@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -7,6 +6,7 @@ import 'package:flutter_blog_clean_arch_app/core/common/blocs/app/app_cubit.dart
 import 'package:flutter_blog_clean_arch_app/core/common/blocs/app_user/app_user_cubit.dart';
 import 'package:flutter_blog_clean_arch_app/core/common/widgets/toast/custom_toast.dart';
 import 'package:flutter_blog_clean_arch_app/core/constants/data/blog_topics.dart';
+import 'package:flutter_blog_clean_arch_app/core/constants/localization/local_keys.g.dart';
 import 'package:flutter_blog_clean_arch_app/core/constants/route/route_keys.dart';
 import 'package:flutter_blog_clean_arch_app/core/extensions/string_extensions.dart';
 import 'package:flutter_blog_clean_arch_app/core/route/my_router.dart';
@@ -36,16 +36,15 @@ mixin AddNewBlogPageMixin on State<AddNewBlogPage> {
 
   String? titleValidator(String? value) {
     if (value.isEmptyOrNull) {
-      return 'Title is required';
+      return LocalKeys.pagesAddNewBlogInputsTitleValidatesRequired.local;
     }
     return null;
   }
 
   String? contentValidator(String? value) {
     if (value.isEmptyOrNull) {
-      return 'Content is required';
+      return LocalKeys.pagesAddNewBlogInputsContentValidatesRequired.local;
     }
-    log('Content is required');
     return null;
   }
 
@@ -70,7 +69,7 @@ mixin AddNewBlogPageMixin on State<AddNewBlogPage> {
     final isValidForm = formKey.currentState?.validate() ?? false;
     if (!isValidForm) {
       CustomToast.show(
-        message: 'Please fill all fields',
+        message: LocalKeys.pagesAddNewBlogOnSaveValidFillAllFields.local,
         context: context,
       );
       return;
@@ -78,7 +77,7 @@ mixin AddNewBlogPageMixin on State<AddNewBlogPage> {
 
     if (selectedTopics.isEmpty) {
       CustomToast.show(
-        message: 'Please select at least one topic',
+        message: LocalKeys.pagesAddNewBlogOnSaveValidSelectAnTopic.local,
         context: context,
       );
       return;
@@ -86,7 +85,7 @@ mixin AddNewBlogPageMixin on State<AddNewBlogPage> {
 
     if (selectedImage == null) {
       CustomToast.show(
-        message: 'Please select an image',
+        message: LocalKeys.pagesAddNewBlogOnSaveValidSelectImage.local,
         context: context,
       );
       return;
@@ -96,7 +95,7 @@ mixin AddNewBlogPageMixin on State<AddNewBlogPage> {
 
     if (currentUserId == null) {
       CustomToast.show(
-        message: 'User not found',
+        message: LocalKeys.pagesAddNewBlogOnSaveValidUserNotFound.local,
         context: context,
       );
       return;

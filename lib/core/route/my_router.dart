@@ -24,14 +24,11 @@ final class MyRouter {
 
   IRouterNav get routerNav => _DefaultRouterNav(navigatorKey: navigatorKey);
 
-  Map<String, Widget Function(BuildContext)> get routes => {
-        RouteKeys.auth.path: (ctx) =>
-            _generateRouteWidget(ctx, RouteKeys.auth.path),
-        RouteKeys.blog.path: (ctx) =>
-            _generateRouteWidget(ctx, RouteKeys.blog.path),
-        RouteKeys.addNewBlog.path: (ctx) =>
-            _generateRouteWidget(ctx, RouteKeys.addNewBlog.path),
-      };
+  Map<String, Widget Function(BuildContext)> get routes =>
+      RouteKeys.values.fold({}, (prev, element) {
+        prev[element.path] = (ctx) => _generateRouteWidget(ctx, element.path);
+        return prev;
+      });
 
   Route<dynamic> navigateTo(String? path) {
     return kIsWeb || (!Platform.isIOS && !Platform.isMacOS)

@@ -163,6 +163,7 @@ class BlogRemoteDataSource extends IBlogRemoteDataSource {
                   (blog['profiles'] as Map<String, dynamic>)['name'] as String?,
             ),
           );
+
           return addResParams;
         },
       ).toList();

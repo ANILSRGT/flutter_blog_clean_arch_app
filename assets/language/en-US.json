@@ -19,6 +19,17 @@
                 "getCurrentUser": "User not found!"
             }
         },
+        "blog": {
+            "uploadBlog": "Blog creation failed!",
+            "uploadBlogImageByUploadBlog": "Error while uploading blog image during blog creation!",
+            "uploadBlogImage": "Error while uploading blog image!",
+            "updateBlog": "Error while updating blog!",
+            "notFoundBlog": "Blog not found!",
+            "getAllBlogs": "Error while getting blogs!"
+        },
+        "network": {
+            "noInternetConnection": "No internet connection!"
+        },
         "unknown": {
             "utils": {
                 "pickImage": "Error while picking image!"
@@ -85,11 +96,25 @@
                     "label": "Select Image"
                 },
                 "title": {
-                    "label": "Title"
+                    "label": "Title",
+                    "placeholder": "Enter title",
+                    "validates": {
+                        "required": "Title is required!"
+                    }
                 },
                 "content": {
-                    "label": "Content"
+                    "label": "Content",
+                    "placeholder": "Enter content",
+                    "validates": {
+                        "required": "Content is required!"
+                    }
                 }
+            },
+            "onSaveValid": {
+                "fillAllFields": "Fill in all fields!",
+                "selectAnTopic": "Select at least one topic!",
+                "selectImage": "Select an image!",
+                "userNotFound": "User not found!"
             }
         }
     }

@@ -66,7 +66,7 @@ class _BlogViewerPageState extends State<BlogViewerPage>
 
   Text _buildOwnerName() {
     return Text(
-      args.blog.resParams!.ownerName!,
+      args.blog.resParams?.ownerName ?? '',
       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
             fontWeight: FontWeight.w500,
           ),

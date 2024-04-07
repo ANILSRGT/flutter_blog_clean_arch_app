@@ -16,6 +16,13 @@ final class LocalKeys {
 	static String get errorsServerAuthSignUpUserExists => 'errors.server.auth.signUpUserExists';
 	static String get errorsServerAuthSignUpUserInvalid => 'errors.server.auth.signUpUserInvalid';
 	static String get errorsServerAuthGetCurrentUser => 'errors.server.auth.getCurrentUser';
+	static String get errorsBlogUploadBlog => 'errors.blog.uploadBlog';
+	static String get errorsBlogUploadBlogImageByUploadBlog => 'errors.blog.uploadBlogImageByUploadBlog';
+	static String get errorsBlogUploadBlogImage => 'errors.blog.uploadBlogImage';
+	static String get errorsBlogUpdateBlog => 'errors.blog.updateBlog';
+	static String get errorsBlogNotFoundBlog => 'errors.blog.notFoundBlog';
+	static String get errorsBlogGetAllBlogs => 'errors.blog.getAllBlogs';
+	static String get errorsNetworkNoInternetConnection => 'errors.network.noInternetConnection';
 	static String get errorsUnknownUtilsPickImage => 'errors.unknown.utils.pickImage';
 	static String get pagesAuthSignIn => 'pages.auth.signIn';
 	static String get pagesAuthSignUp => 'pages.auth.signUp';
@@ -44,5 +51,13 @@ final class LocalKeys {
 	static String get pagesAddNewBlogTitle => 'pages.addNewBlog.title';
 	static String get pagesAddNewBlogInputsSelectImageLabel => 'pages.addNewBlog.inputs.selectImage.label';
 	static String get pagesAddNewBlogInputsTitleLabel => 'pages.addNewBlog.inputs.title.label';
+	static String get pagesAddNewBlogInputsTitlePlaceholder => 'pages.addNewBlog.inputs.title.placeholder';
+	static String get pagesAddNewBlogInputsTitleValidatesRequired => 'pages.addNewBlog.inputs.title.validates.required';
 	static String get pagesAddNewBlogInputsContentLabel => 'pages.addNewBlog.inputs.content.label';
+	static String get pagesAddNewBlogInputsContentPlaceholder => 'pages.addNewBlog.inputs.content.placeholder';
+	static String get pagesAddNewBlogInputsContentValidatesRequired => 'pages.addNewBlog.inputs.content.validates.required';
+	static String get pagesAddNewBlogOnSaveValidFillAllFields => 'pages.addNewBlog.onSaveValid.fillAllFields';
+	static String get pagesAddNewBlogOnSaveValidSelectAnTopic => 'pages.addNewBlog.onSaveValid.selectAnTopic';
+	static String get pagesAddNewBlogOnSaveValidSelectImage => 'pages.addNewBlog.onSaveValid.selectImage';
+	static String get pagesAddNewBlogOnSaveValidUserNotFound => 'pages.addNewBlog.onSaveValid.userNotFound';
 }
