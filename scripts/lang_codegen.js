@@ -5,9 +5,20 @@ const inputFolder = "../assets/language";
 const outputFolder = "../lib/core/constants/localization";
 const outputFile = "local_keys.g.dart";
 
+if (!fs.existsSync(path.join(__dirname, inputFolder))) {
+  console.error("Input folder not found: " + inputFolder);
+  process.exit(1);
+}
+
 const inputFolderPath = path.join(__dirname, inputFolder);
 const outputFilePath = path.join(__dirname, outputFolder, outputFile);
 const inputFiles = fs.readdirSync(inputFolderPath);
+
+if (inputFiles.length === 0) {
+  console.error("Input folder is empty: " + inputFolder);
+  process.exit(1);
+}
+
 const inputFilePath = path.join(inputFolderPath, inputFiles[0]);
 const inputJson = JSON.parse(fs.readFileSync(inputFilePath, "utf8"));
 
@@ -55,6 +66,7 @@ const dartCode =
     .join("\n") +
   "\n}";
 
+fs.mkdirSync(path.dirname(outputFilePath), { recursive: true });
 fs.writeFileSync(outputFilePath, dartCode);
 
 console.log("Dart code generated successfully");
